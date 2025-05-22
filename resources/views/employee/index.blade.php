@@ -1,58 +1,67 @@
-<x-layouts.app :title="__('Employees')">
-     <div class="mb-6 flex items-center justify-between gap-4">
-        <flux:heading level="1" class="text-2xl font-bold text-zinc-900 dark:text-white">
-            {{ __('Employees') }}
-        </flux:heading>
+<x-app-layout>
+    <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
 
-        <a href="{{ route('employee.create') }}" class="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-blue-700">
-            <x-icon name="plus" class="h-4 w-4" />
-            {{ __('Add Employee') }}
-        </a>
-    </div>
-
-    @if(session('success'))
-        <div class="mb-4 p-4 bg-green-100 text-green-800 rounded">
-            {{ session('success') }}
+        <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
+            <div class="grow">
+                <h5 class="text-16">Employees</h5>
+            </div>
+            <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
+                <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
+                    <a href="{{ route('dashboard') }}" class="text-slate-400 dark:text-zink-200">Home</a>
+                </li>
+                <li class="text-slate-700 dark:text-zink-100">
+                    Employees
+                </li>
+            </ul>
         </div>
-    @endif
+        <div class="card">
+            <div class="card-body">
+                <h6 class="mb-4 text-15">All Employees</h6>
 
-    <div class="overflow-x-auto bg-white dark:bg-zinc-800 shadow rounded-lg">
-        <table class="min-w-full divide-y divide-zinc-200 dark:divide-zinc-700">
-            <thead class="bg-zinc-100 dark:bg-zinc-700">
-                <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-300">Name</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-300">Email</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-300">Position</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-300">Department</th>
-                    <th class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-300">Actions</th>
-                </tr>
-            </thead>
-            {{-- <tbody class="divide-y divide-zinc-200 dark:divide-zinc-700">
-                @forelse($employees as $employee)
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-zinc-900 dark:text-zinc-100">{{ $employee->name }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-zinc-900 dark:text-zinc-100">{{ $employee->email }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-zinc-900 dark:text-zinc-100">{{ $employee->position }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-zinc-900 dark:text-zinc-100">{{ $employee->department }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right space-x-2">
-                        <a href="{{ route('employee.show', $employee) }}" class="text-blue-600 hover:underline">View</a>
-                        <a href="{{ route('employee.edit', $employee) }}" class="text-yellow-500 hover:underline">Edit</a>
-                        <form action="{{ route('employee.destroy', $employee) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-red-600 hover:underline">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="5" class="px-6 py-4 text-center text-zinc-500 dark:text-zinc-300">No employees found.</td>
-                </tr>
-                @endforelse
-            </tbody> --}}
-        </table>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="ltr:text-left rtl:text-right">
+                            <tr>
+                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">Employee No</th>
+                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">Name</th>
+                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">Email</th>
+                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">Phone Number</th>
+                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="odd:bg-white even:bg-slate-50 dark:odd:bg-zink-700 dark:even:bg-zink-600">
+                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500"><a href="#!" class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600">#EMP-00001</a></td>
+                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">Shirley Alalade</td>
+                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">shirls@gmail.com</td>
+                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">09090384903</td>
+                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500"><a href="#!" class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600"><i class="ri-download-2-line"></i></a></td>
+                            </tr>
+                            <tr class="odd:bg-white even:bg-slate-50 dark:odd:bg-zink-700 dark:even:bg-zink-600">
+                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500"><a href="#!" class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600">#EMP-00002</a></td>
+                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">Okoduwa Marcus</td>
+                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">oko@gmail.com</td>
+                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">07039482039</td>
+                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500"><a href="#!" class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600"><i class="ri-download-2-line"></i></a></td>
+                            </tr>
+                            <tr class="odd:bg-white even:bg-slate-50 dark:odd:bg-zink-700 dark:even:bg-zink-600">
+                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500"><a href="#!" class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600">#EMP-00003</a></td>
+                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">Jeffery Dman</td>
+                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">bigmanjef@gmail.com</td>
+                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">08039483940</td>
+                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500"><a href="#!" class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600"><i class="ri-download-2-line"></i></a></td>
+                            </tr>
+                            <tr class="odd:bg-white even:bg-slate-50 dark:odd:bg-zink-700 dark:even:bg-zink-600">
+                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500"><a href="#!" class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600">#EMP-00005</a></td>
+                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">Ejo Unoderest</td>
+                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">ejo@gmail.com</td>
+                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">08129384952</td>
+                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500"><a href="#!" class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600"><i class="ri-download-2-line"></i></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-</div> 
-</x-layouts.app>
-
-
+</x-app-layout>
