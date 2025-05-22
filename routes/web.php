@@ -10,9 +10,13 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
+
+// Route::view('dashboard', 'dashboard')
+//     ->middleware(['auth', 'verified'])
+//     ->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
@@ -20,9 +24,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/profile', Profile::class)->name('settings.profile');
     Route::get('settings/password', Password::class)->name('settings.password');
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
-
-    Route::get('/employee', [EmployeeController::class, 'index'])->name('employee.index');
-    Route::get('/employee/create', [EmployeeController::class, 'create'])->name('employee.create');
+    
+    Route::prefix('employee')->name('employee.')->group(function () {
+        Route::get('/', [EmployeeController::class, 'index'])->name('index');
+        Route::get('/create', [EmployeeController::class, 'create'])->name('create');
+        Route::get('/store', [EmployeeController::class, 'store'])->name('store');
+    });
 });
 
 require __DIR__.'/auth.php';
