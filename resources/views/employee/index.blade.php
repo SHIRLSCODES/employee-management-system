@@ -18,48 +18,72 @@
             <div class="card-body">
                 <h6 class="mb-4 text-15">All Employees</h6>
 
+                    @if (session('success'))
+                        <div id="success-message" class="mb-4 p-4 bg-green-500 text-white rounded-lg">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    @if (session('error'))
+                        <div id="error-message" class="mb-4 p-3 bg-red-600 text-white rounded-md">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
+                    <script>
+                       setTimeout(function() {
+                        document.getElementById('success-message')?.remove();
+                        document.getElementById('error-message')?.remove();
+                       }, 10000);
+                    </script> 
+
                 <div class="overflow-x-auto">
                     <table class="w-full">
-                        <thead class="ltr:text-left rtl:text-right">
-                            <tr>
-                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">Employee No</th>
-                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">Name</th>
-                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">Email</th>
-                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">Phone Number</th>
-                                <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">Action</th>
+                        <thead class="ltr:text-left rtl:text-right">      
+                            <tr class="bg-gray-100 dark:bg-gray-700 text-left text-xs font-semibold uppercase text-gray-600 dark:text-gray-300">
+                                <th class="px-4 py-2">Employee No</th>
+                                <th class="px-4 py-2">Name</th>
+                                <th class="px-4 py-2">Email</th>
+                                <th class="px-4 py-2">Phone</th>
+                                <th class="px-4 py-2">Status</th>
+                                <th class="px-4 py-2">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="odd:bg-white even:bg-slate-50 dark:odd:bg-zink-700 dark:even:bg-zink-600">
-                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500"><a href="#!" class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600">#EMP-00001</a></td>
-                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">Shirley Alalade</td>
-                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">shirls@gmail.com</td>
-                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">09090384903</td>
-                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500"><a href="#!" class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600"><i class="ri-download-2-line"></i></a></td>
-                            </tr>
-                            <tr class="odd:bg-white even:bg-slate-50 dark:odd:bg-zink-700 dark:even:bg-zink-600">
-                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500"><a href="#!" class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600">#EMP-00002</a></td>
-                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">Okoduwa Marcus</td>
-                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">oko@gmail.com</td>
-                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">07039482039</td>
-                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500"><a href="#!" class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600"><i class="ri-download-2-line"></i></a></td>
-                            </tr>
-                            <tr class="odd:bg-white even:bg-slate-50 dark:odd:bg-zink-700 dark:even:bg-zink-600">
-                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500"><a href="#!" class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600">#EMP-00003</a></td>
-                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">Jeffery Dman</td>
-                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">bigmanjef@gmail.com</td>
-                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">08039483940</td>
-                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500"><a href="#!" class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600"><i class="ri-download-2-line"></i></a></td>
-                            </tr>
-                            <tr class="odd:bg-white even:bg-slate-50 dark:odd:bg-zink-700 dark:even:bg-zink-600">
-                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500"><a href="#!" class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600">#EMP-00005</a></td>
-                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">Ejo Unoderest</td>
-                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">ejo@gmail.com</td>
-                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">08129384952</td>
-                                <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500"><a href="#!" class="transition-all duration-150 ease-linear text-custom-500 hover:text-custom-600"><i class="ri-download-2-line"></i></a></td>
-                            </tr>
+                            @foreach ($employees as $employee)
+                                <tr class="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+                                    <td class="px-4 py-2">{{ $employee->employee_no }}</td>
+                                    <td class="px-4 py-2">{{ $employee->first_name .' '. $employee->last_name}}</td>
+                                    <td class="px-4 py-2">{{ $employee->email }}</td>
+                                    <td class="px-4 py-2">{{ $employee->phone_number }}</td>
+                                    <td class="px-4 py-2">  
+                                        <span class="px-2 py-1 rounded-full text-sm font-semibold border
+                                                @if($employee->status === 'Active') bg-green-600 text-green-600 border-green-500 
+                                                @elseif($employee->status === 'on leave') bg-yellow-600 text-yellow-600 border-yellow-500 
+                                                @elseif($employee->status === 'resigned') bg-red-600 text-red-600 border-red-500 
+                                                @else bg-gray-600 text-gray-800 border-gray-400 
+                                                @endif
+                                            ">
+                                                {{ ucfirst($employee->status) }}
+                                            </span>
+                                    </td>
+                                    <td class="px-4 py-2">
+                                        <div class="flex items">
+                                            <a href="{{ route('employee.show', $employee->id) }}" class="text-blue-500 hover:text-blue-600 mr-2">View</a>
+                                            <a href="{{ route('employee.edit', $employee->id) }}" class="text-yellow-600 hover:text-yellow-800 mr-2">Edit</a>
+                                            <form action="{{ route('employee.delete', $employee->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this employee?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-600 hover:text-red-800">Delete</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
+                    <div class="mt-4 flex justify-center">
+                        {{ $employees->links() }}
+                    </div>
                 </div>
             </div>
         </div>
