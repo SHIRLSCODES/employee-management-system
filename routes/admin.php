@@ -1,20 +1,10 @@
 <?php
 
-use App\Livewire\Settings\Appearance;
-use App\Livewire\Settings\Password;
 use Illuminate\Http\Request;
-use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\AdminLoginController;
-use App\Http\Controllers\EmployeeLoginController;
 use App\Http\Controllers\DepartmentController;
 use App\Models\Employee;
-
-
-Route::get('/login/admin', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
-Route::post('/login/admin', [AdminLoginController::class, 'login']);
-Route::post('/logout/admin', [AdminLoginController::class, 'logout'])->name('admin.logout');
 
 Route::prefix('admin')->middleware(['auth:admin'])->name('admin.')->group(function () {
     Route::get('/dashboard', function (Request $request) {
