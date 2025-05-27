@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ Route::post('/logout/employee', [EmployeeLoginController::class, 'logout'])->nam
 Route::middleware(['auth'])->group(function () {
    
 
-    Route::get('/dashboard',[EmployeeController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard',[DashboardController::class, 'dashboard'])->name('dashboard');
 
 
     Route::redirect('settings', 'settings/profile');
@@ -34,7 +35,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/password', Password::class)->name('settings.password');
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 
-    Route::get('{employee}/my-details', [EmployeeController::class, 'show'])->name('show');
+    Route::get('{employee}/my-details', [EmployeeController::class, 'show'])->name('my-details');
 });
 
 require __DIR__.'/auth.php';

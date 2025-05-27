@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-admin-layout>
     <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
         <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
             <div class="grow">
@@ -97,4 +97,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-admin-layout>

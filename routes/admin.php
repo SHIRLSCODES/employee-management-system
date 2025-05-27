@@ -1,29 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\DepartmentController;
 use App\Models\Employee;
 
 Route::prefix('admin')->middleware(['auth:admin'])->name('admin.')->group(function () {
-    Route::get('/dashboard', function (Request $request) {
-        $query = Employee::query();
-
-        if ($request->filled('department')) {
-            $query->where('department', $request->department);
-        }
-
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
-        }
-
-        $employees = $query->paginate(5)->withQueryString();
-
-        $departments = Employee::select('department')->distinct()->pluck('department');
-
-        return view('dashboard', compact('employees', 'departments'));
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
     Route::prefix('employee')->name('employee.')->group(function () {
         Route::get('/', [EmployeeController::class, 'index'])->name('index');

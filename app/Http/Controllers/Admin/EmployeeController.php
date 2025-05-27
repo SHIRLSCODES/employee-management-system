@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Http\Requests\SaveEmployeeRequest;
@@ -26,13 +27,13 @@ class EmployeeController extends Controller
 
         $departments = Employee::select('department')->distinct()->pluck('department');
 
-        return view('employee.index', compact('employees', 'departments'));
+        return view('admin.employee.index', compact('employees', 'departments'));
     }
 
 
     public function create()
     {
-        return view('employee.create');
+        return view('admin.employee.create');
     }
 
     public function store(SaveEmployeeRequest $request)
@@ -44,24 +45,24 @@ class EmployeeController extends Controller
 
         $employee = Employee::create($employee);
 
-        return redirect()->route('employee.index')->with('success','Employee created successfully');
+        return redirect()->route('admin.employee.index')->with('success','Employee created successfully');
     }
 
     public function show(Employee $employee)
     {
-        return view('employee.show', compact('employee'));
+        return view('admin.employee.show', compact('employee'));
     }
 
     public function edit(Employee $employee)
     {
-        return view('employee.edit', compact('employee'));
+        return view('admin.employee.edit', compact('employee'));
     }
 
     public function update(SaveEmployeeUpdateRequest $request, Employee $employee)
     {
         $employee->update($request->validated());
 
-        return redirect()->route('employee.index')->with('success', 'Employee updated successfully');
+        return redirect()->route('admin.employee.index')->with('success', 'Employee updated successfully');
     }
 
 
@@ -71,7 +72,7 @@ class EmployeeController extends Controller
 
         $employee->delete();
 
-        return redirect()->route('employee.index')->with('success', 'Employee deleted successfully');
+        return redirect()->route('admin.employee.index')->with('success', 'Employee deleted successfully');
     }
 
     public function search(Request $request)
@@ -85,7 +86,7 @@ class EmployeeController extends Controller
 
             // Return partial HTML to update the table
             return response()->json([
-                'html' => view('partials.employee-rows', compact('employees'))->render()
+                'html' => view('admin.partials.employee-rows', compact('employees'))->render()
             ]);
         }
 }

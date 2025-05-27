@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-admin-layout>
     <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
 
         <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
@@ -7,10 +7,10 @@
             </div>
             <ul class="flex items-center gap-2 text-sm font-normal shrink-0">
                 <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                    <a href="{{ route('dashboard') }}" class="text-slate-400 dark:text-zink-200">Home</a>
+                    <a href="{{ route('admin.dashboard') }}" class="text-slate-400 dark:text-zink-200">Home</a>
                 </li>
                 <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                    <a href="{{ route('employee.index') }}" class="text-slate-400 dark:text-zink-200">Employees</a>
+                    <a href="{{ route('admin.employee.index') }}" class="text-slate-400 dark:text-zink-200">Employees</a>
                 </li>
                 <li class="text-slate-700 dark:text-zink-100">
                     Create
@@ -19,61 +19,74 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('employee.store') }}" method="POST">
+                <form action="{{ route('admin.employee.store') }}" method="POST">
                     @csrf
                     <h6 class="mb-4 text-gray-800 text-16 dark:text-zink-50">Add New Employee</h6>
                     <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
                          <div class="xl:col-span-3">
                             <label for="employee_no" class="inline-block mb-2 text-base font-medium">Employee No:</label>
                             <input type="text" id="first_name" name="employee_no" value="{{ old('employee_no') }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="" required>
+                            <x-input-error :messages="$errors->get('employee_no')" class="mt-2" />
                         </div>
                         <div class="xl:col-span-3">
                             <label for="first_name" class="inline-block mb-2 text-base font-medium">First Name:</label>
                             <input type="text" id="first_name" name="first_name" value="{{ old('first_name') }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="E.g: Shirls" required>
+                            <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
                         </div><!--end col-->
                         <div class="xl:col-span-3">
                             <label for="last_name" class="inline-block mb-2 text-base font-medium">Last Name:</label>
                             <input type="text" id="last_name" name="last_name" value="{{ old('last_name') }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="E.g: Writes" required>
+                            <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
                         </div><!--end col-->
                         <div class="xl:col-span-3">
                             <label for="email" class="inline-block mb-2 text-base font-medium">Email:</label>
                             <input type="email" id="email" name="email" value="{{ old('email') }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="***@***.com" required>
+                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
                         </div><!--end col-->
                         <div class="xl:col-span-3">
                             <label for="password" class="inline-block mb-2 text-base font-medium">Password:</label>
                             <input type="password" id="password" name="password" value="{{ old('password') }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="" required>
+                            <x-input-error :messages="$errors->get('password')" class="mt-2" />
                         </div><!--end col-->
                         <div class="xl:col-span-3">
                             <label for="phone_number" class="inline-block mb-2 text-base font-medium">Phone Number:</label>
                             <input type="text" id="phone_number" name="phone_number" value="{{ old('phone_number') }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="070***" required>
+                            <x-input-error :messages="$errors->get('phone_number')" class="mt-2" />
                         </div><!--end col-->
                          <div class="xl:col-span-3">
                             <label for="date_of_birth" class="inline-block mb-2 text-base font-medium">DOB:</label>
                             <input type="date" id="date_of_birth" name="date_of_birth" value="{{ old('date_of_birth') }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="" required>
+                            <x-input-error :messages="$errors->get('date_of_birth')" class="mt-2" />
                         </div><!--end col-->
                         <div class="xl:col-span-3">
                             <label for="nin" class="inline-block mb-2 text-base font-medium">NIN:</label>
                             <input type="text" id="nin" name="nin" value="{{ old('nin') }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="" required>
+                            <x-input-error :messages="$errors->get('nin')" class="mt-2" />
                         </div>
                          <div class="xl:col-span-3">
                             <label for="gender" class="inline-block mb-2 text-base font-medium">Gender:</label>
                             <input type="text" id="gender" name="gender" value="{{ old('gender') }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Female/Male" required>
+                            <x-input-error :messages="$errors->get('gender')" class="mt-2" />
                         </div>
                          <div class="xl:col-span-3">
                             <label for="address" class="inline-block mb-2 text-base font-medium">Address:</label>
                             <input type="text" id="address" name="address" value="{{ old('address') }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="" required>
+                            <x-input-error :messages="$errors->get('address')" class="mt-2" />
                         </div>
                          <div class="xl:col-span-3">
                             <label for="department" class="inline-block mb-2 text-base font-medium">Department:</label>
                             <input type="text" id="department" name="department" value="{{ old('department') }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="" required>
+                            <x-input-error :messages="$errors->get('department')" class="mt-2" />
                         </div>
                          <div class="xl:col-span-3">
                             <label for="designation" class="inline-block mb-2 text-base font-medium">Designation:</label>
                             <input type="text" id="designation" name="designation" value="{{ old('designation') }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="" required>
+                            <x-input-error :messages="$errors->get('designation')" class="mt-2" />
                         </div>
                          <div class="xl:col-span-3">
                             <label for="status" class="inline-block mb-2 text-base font-medium">Status:</label>
                             <input type="text" id="status" name="status" value="{{ old('status') }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Active/on leave/resigned" required>
+                            <x-input-error :messages="$errors->get('status')" class="mt-2" />
                         </div>
                     </div><!--end grid-->
 
@@ -85,4 +98,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-admin-layout>
