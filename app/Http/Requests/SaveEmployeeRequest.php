@@ -27,6 +27,7 @@ class SaveEmployeeRequest extends FormRequest
             'last_name' => 'required|string|max:20',
             'nin' => 'required|string|max:20|unique:employees,nin',
             'email' => 'required|email|max:255|unique:employees,email',
+            'password' => 'required|string|min:8',
             'phone_number' => 'required|string|max:20',
             'date_of_birth' => 'required|date|before:today',
             'address' => 'required|string|max:1000',
