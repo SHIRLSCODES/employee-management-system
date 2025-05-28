@@ -49,7 +49,7 @@
                 </div>
                 <div>
                     <p class="text-gray-500 dark:text-gray-400 mb-1">Department</p>
-                    <p class="font-medium text-gray-900 dark:text-white">{{ $employee->department }}</p>
+                    <p class="font-medium text-gray-900 dark:text-white">{{ $employee->department->name }}</p>
                 </div>
                 <div>
                     <p class="text-gray-500 dark:text-gray-400 mb-1">Designation</p>
