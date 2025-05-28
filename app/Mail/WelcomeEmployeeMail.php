@@ -30,7 +30,6 @@ class WelcomeEmployeeMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address($this->admin->email, $this->admin->name),
             subject: 'Welcome Employee Mail',
         );
     }

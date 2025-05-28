@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Employee;
+use App\Mail\WelcomeEmployeeMail;
 use App\Http\Requests\SaveEmployeeRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\SaveEmployeeUpdateRequest;
@@ -21,7 +22,7 @@ class EmployeeController extends Controller
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
-
+      
         $employees = $query->paginate(5)->withQueryString();
 
         $departments = Employee::select('department')->distinct()->pluck('department');
@@ -47,7 +48,7 @@ class EmployeeController extends Controller
 
         $admin = auth('admin')->user();
 
-        Mail::to($employee->email)->send(new WelcomeEmployeeMail($employee, $plainPassword, $admin));
+        // Mail::to($employee->email)->send(new WelcomeEmployeeMail($employee, $plainPassword, $admin));
 
         return redirect()->route('admin.employee.index')->with('success', 'Employee created and email sent successfully.');
     }

@@ -163,21 +163,14 @@
 
                                     Welcome {{ auth()->user()->first_name }} 🎉 (Employee)
                             </h5> 
+                            <form method="GET" action="{{ route('my-details', auth()->user()->id) }}"> 
+                                <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-500/20 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-500/20 dark:ring-custom-400/20">View my details</button>
+                            </form> 
                         </div>
                        
                         <div class="hidden col-span-12 2xl:col-span-3 lg:col-span-2 lg:col-start-11 2xl:col-start-10 lg:block">
                             <img src="assets/images/employeebg.png" alt="..." class="w-80 h-40 object-cover ltr:2xl:ml-auto rtl:2xl:mr-auto">
                         </div>
-
-                        
-                            <div class="flex justify-end mb-4">
-                                <a href="{{ route('my-details', auth()->user()->id) }}"
-                                class="px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition-all duration-200">
-                                    View My Profile
-                                </a>
-                            </div>
-                       
-
                     </div>
                 </div>
             </div><!--end col-->

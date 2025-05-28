@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use App\Models\Employee;
+use App\Mail\WelcomeEmployeeMail;
 use App\Http\Requests\SaveEmployeeRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\SaveEmployeeUpdateRequest;
@@ -25,6 +27,8 @@ class EmployeeController extends Controller
 
         $employees = $query->paginate(5)->withQueryString();
 
+  
+
         $departments = Employee::select('department')->distinct()->pluck('department');
 
         return view('admin.employee.index', compact('employees', 'departments'));
@@ -39,11 +43,18 @@ class EmployeeController extends Controller
     public function store(SaveEmployeeRequest $request)
     {
         
-        $employee = $request->validated();
+        $validated = $request->validated();
 
-        $employee['password'] = Hash::make($employee['password']);
+        $plainPassword = $validated['password'];
 
-        $employee = Employee::create($employee);
+        $validated['password'] = Hash::make($plainPassword);
+
+        $employee = Employee::create($validated);
+
+        $admin = auth('admin')->user();
+
+        Mail::to($employee->email)->send(new WelcomeEmployeeMail($employee, $plainPassword, $admin));
+
 
         return redirect()->route('admin.employee.index')->with('success','Employee created successfully');
     }
