@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-admin-layout>
 
 
 <div class="container mx-auto px-4 mt-4">
@@ -29,4 +29,4 @@
 </div>
 
 
-</x-app-layout>
+</x-admin-layout>

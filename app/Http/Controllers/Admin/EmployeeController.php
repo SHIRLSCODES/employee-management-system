@@ -86,7 +86,7 @@ class EmployeeController extends Controller
 
             // Return partial HTML to update the table
             return response()->json([
-                'html' => view('admin.partials.employee-rows', compact('employees'))->render()
+                'html' => view('partials.admin.employee-rows', compact('employees'))->render()
             ]);
         }
 }

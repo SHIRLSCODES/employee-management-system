@@ -26,25 +26,30 @@ class EmployeeController extends Controller
 
         $departments = Employee::select('department')->distinct()->pluck('department');
 
-        return view('employee.index', compact('employees', 'departments'));
+        return view('admin.employee.index', compact('employees', 'departments'));
     }
 
 
     public function create()
     {
-        return view('employee.create');
+        return view('admin.employee.create');
     }
 
     public function store(SaveEmployeeRequest $request)
     {
-        
-        $employee = $request->validated();
+        $validated = $request->validated();
 
-        $employee['password'] = Hash::make($employee['password']);
+        $plainPassword = $validated['password'];
 
-        $employee = Employee::create($employee);
+        $validated['password'] = Hash::make($plainPassword);
 
-        return redirect()->route('employee.index')->with('success','Employee created successfully');
+        $employee = Employee::create($validated);
+
+        $admin = auth('admin')->user();
+
+        Mail::to($employee->email)->send(new WelcomeEmployeeMail($employee, $plainPassword, $admin));
+
+        return redirect()->route('admin.employee.index')->with('success', 'Employee created and email sent successfully.');
     }
 
     public function show(Employee $employee)
@@ -54,14 +59,14 @@ class EmployeeController extends Controller
 
     public function edit(Employee $employee)
     {
-        return view('employee.edit', compact('employee'));
+        return view('admin.employee.edit', compact('employee'));
     }
 
     public function update(SaveEmployeeUpdateRequest $request, Employee $employee)
     {
         $employee->update($request->validated());
 
-        return redirect()->route('employee.index')->with('success', 'Employee updated successfully');
+        return redirect()->route('admin.employee.index')->with('success', 'Employee updated successfully');
     }
 
 
@@ -71,7 +76,7 @@ class EmployeeController extends Controller
 
         $employee->delete();
 
-        return redirect()->route('employee.index')->with('success', 'Employee deleted successfully');
+        return redirect()->route('admin.employee.index')->with('success', 'Employee deleted successfully');
     }
 
     public function search(Request $request)

@@ -9,7 +9,7 @@
                     <a href="{{ route('dashboard') }}" class="text-slate-400 dark:text-zink-200">Home</a>
                 </li>
                 <li class="relative before:content-['\ea54'] before:font-remix ltr:before:-right-1 rtl:before:-left-1  before:absolute before:text-[18px] before:-top-[3px] ltr:pr-4 rtl:pl-4 before:text-slate-400 dark:text-zink-200">
-                    <a href="{{ route('employee.index') }}" class="text-slate-400 dark:text-zink-200">Employees</a>
+                    <a href="{{ route('admin.employee.index') }}" class="text-slate-400 dark:text-zink-200">Employees</a>
                 </li>
                 <li class="text-slate-700 dark:text-zink-100">
                     Edit
@@ -19,7 +19,7 @@
 
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('employee.update', $employee->id) }}" method="POST">
+                <form action="{{ route('admin.employee.update', $employee->id) }}" method="POST">
                     @csrf
                     @method('PATCH')
 
@@ -90,7 +90,7 @@
                     </div>
 
                     <div class="flex justify-end gap-2 mt-5">
-                        <a href="{{ route('employee.index') }}" class="btn bg-slate-200 text-slate-600 hover:bg-slate-300 dark:bg-zink-600 dark:text-zink-200 dark:hover:bg-zink-500">Cancel</a>
+                        <a href="{{ route('admin.employee.index') }}" class="btn bg-slate-200 text-slate-600 hover:bg-slate-300 dark:bg-zink-600 dark:text-zink-200 dark:hover:bg-zink-500">Cancel</a>
                             <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:bg-custom-600">Update</button>
                     </div>
                 </form>

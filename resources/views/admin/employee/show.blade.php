@@ -67,7 +67,7 @@
 
             <!-- Back Button -->
             <div class="mt-8">
-                <a href="{{ route('employee.index') }}" class="inline-block bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-800 dark:text-white font-semibold py-2 px-6 rounded-lg transition">
+                <a href="{{ route('admin.employee.index') }}" class="inline-block bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-800 dark:text-white font-semibold py-2 px-6 rounded-lg transition">
                     ← Back to Employees
                 </a>
             </div>

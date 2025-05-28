@@ -4,7 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\EmployeeController;
-use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\Admin\DepartmentController;
 use App\Models\Employee;
 
 Route::prefix('admin')->middleware(['auth:admin'])->name('admin.')->group(function () {

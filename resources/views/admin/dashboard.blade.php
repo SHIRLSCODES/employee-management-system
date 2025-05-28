@@ -162,7 +162,7 @@
                             <h5 class="mb-3 font-normal tracking-wide text-slate-200">
                                 @auth('admin')
                                     Welcome {{ auth('admin')->user()->name }} 🎉 (Admin) 
-                                    {{-- <form method="GET" action="{{ route('employee.create') }}"> 
+                                    {{-- <form method="GET" action="{{ route('admin.employee.create') }}"> 
                                       <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-500/20 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-500/20 dark:ring-custom-400/20">Create Employee</button>
                                     </form> --}}
                                 @elseif(auth('employee')->check())
@@ -176,7 +176,7 @@
                         </div>
                        
                         <div class="hidden col-span-12 2xl:col-span-3 lg:col-span-2 lg:col-start-11 2xl:col-start-10 lg:block">
-                            <img src="assets/images/employeebg.png" alt="" class="w-80 h-40 object-cover ltr:2xl:ml-auto rtl:2xl:mr-auto">
+                            <img src="{{ asset('assets/images/employeebg.png') }}" alt="" class="w-80 h-40 object-cover ltr:2xl:ml-auto rtl:2xl:mr-auto">
                         </div>
                     </div>
                 </div>
