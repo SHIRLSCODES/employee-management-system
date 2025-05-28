@@ -199,11 +199,11 @@
                             </div>
                         </div><!--end col-->
                     </div><!--end grid-->
-                        <form method="GET" action="{{ route('dashboard') }}" class="mb-4 flex gap-4 items-center">
+                        <form method="GET" action="{{ route('admin.dashboard') }}" class="mb-4 flex gap-4 items-center">
                             <select name="department" class="text-slate-800 dark:text-white bg-transparent form-select border border-gray-300 rounded px-2 py-1">
                                 <option value="" class="text-slate-800 dark:text-black bg-white dark:bg-zinc-700">All Departments</option>
                                 @foreach($departments as $department)
-                                    <option value="{{ $department->name }}" {{ request('department') == $department ? 'selected' : '' }} class="text-slate-800 dark:text-black bg-white dark:bg-zinc-700">
+                                    <option value="{{ $department->id }}" {{ request('department') == $department->id ? 'selected' : '' }} class="text-slate-800 dark:text-black bg-white dark:bg-zinc-700">
                                         {{ ucfirst($department->name) }}
                                     </option>
                                 @endforeach

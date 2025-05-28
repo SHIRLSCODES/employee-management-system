@@ -13,7 +13,7 @@ class DashboardController extends Controller
         $query = Employee::query();
 
         if ($request->filled('department')) {
-            $query->where('department', $request->department);
+            $query->where('department_id', $request->department);
         }
 
         if ($request->filled('status')) {
