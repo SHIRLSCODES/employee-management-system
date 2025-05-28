@@ -287,7 +287,7 @@
                 let query = $('#employee-search').val();
 
                 $.ajax({
-                    url: "{{ route('admin.employee.index') }}",
+                    url: "{{ route('admin.employee.search') }}",
                     type: "GET",
                     data: { query: query },
                     success: function (data) {
