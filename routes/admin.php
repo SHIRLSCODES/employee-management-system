@@ -19,10 +19,18 @@ Route::prefix('admin')->middleware(['auth:admin'])->name('admin.')->group(functi
         Route::delete('/{employee}/delete', [EmployeeController::class, 'delete'])->name('delete');
         Route::post('/store', [EmployeeController::class, 'store'])->name('store');
         Route::get('/search-employees', [EmployeeController::class, 'search'])->name('search');
-        
+        Route::get('/{employee}/show', [EmployeeController::class, 'show'])->name('show');
     });
-       Route::get('employee/{employee}/show', [EmployeeController::class, 'show'])->name('employee.show');
-       Route::get('/departments/{department}/show', [DepartmentController::class, 'show'])->name('departments.show');
+
+    Route::prefix('departments')->name('departments.')->group(function () {
+        Route::get('/', [DepartmentController::class, 'index'])->name('index');
+        Route::get('/create', [DepartmentController::class, 'create'])->name('create');
+        Route::post('/store', [DepartmentController::class, 'store'])->name('store');
+        Route::get('/{department}/show', [DepartmentController::class, 'show'])->name('show');
+        Route::get('/{department}/edit', [DepartmentController::class, 'edit'])->name('edit');
+        Route::patch('/{department}/update', [DepartmentController::class, 'update'])->name('update');
+        Route::post('/{department}/destroy', [DepartmentController::class, 'destroy'])->name('destroy');
+    });
 });
 
 require __DIR__.'/auth.php';

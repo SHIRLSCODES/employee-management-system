@@ -2,7 +2,7 @@
 
 
 <div class="container mx-auto px-4 mt-4">
-    <h1 class="text-2xl font-bold mb-6">Employees in {{ $department }} Department</h1>
+    <h1 class="text-2xl font-bold mb-6">Employees in {{ $department->name }} Department</h1>
 
     @if($employees->isEmpty())
         <p class="text-gray-500">No employees found in this department.</p>

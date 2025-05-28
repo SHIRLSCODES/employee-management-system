@@ -24,67 +24,81 @@
                     @method('PATCH')
 
                     <h6 class="mb-4 text-gray-800 text-16 dark:text-zink-50">Edit Employee</h6>
-                    <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
-
-                       
+                    <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">                       
                         <div class="xl:col-span-3">
                             <label for="employee_no" class="inline-block mb-2 text-base font-medium">Employee No:</label>
                             <input type="text" id="employee_no" name="employee_no" value="{{ old('employee_no', $employee->employee_no) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" required>
+                            <x-input-error :messages="$errors->get('employee_no')" class="mt-2" />
                         </div>
 
                         <div class="xl:col-span-3">
                             <label for="first_name" class="inline-block mb-2 text-base font-medium">First Name:</label>
                             <input type="text" id="first_name" name="first_name" value="{{ old('first_name', $employee->first_name) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" required>
+                            <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
                         </div>
 
                         <div class="xl:col-span-3">
                             <label for="last_name" class="inline-block mb-2 text-base font-medium">Last Name:</label>
                             <input type="text" id="last_name" name="last_name" value="{{ old('last_name', $employee->last_name) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" required>
+                            <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
                         </div>
 
                         <div class="xl:col-span-3">
                             <label for="email" class="inline-block mb-2 text-base font-medium">Email:</label>
                             <input type="email" id="email" name="email" value="{{ old('email', $employee->email) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" required>
+                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
                         </div>
 
                         <div class="xl:col-span-3">
                             <label for="phone_number" class="inline-block mb-2 text-base font-medium">Phone Number:</label>
                             <input type="text" id="phone_number" name="phone_number" value="{{ old('phone_number', $employee->phone_number) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" required>
+                            <x-input-error :messages="$errors->get('phone_number')" class="mt-2" />
                         </div>
 
                         <div class="xl:col-span-3">
                             <label for="date_of_birth" class="inline-block mb-2 text-base font-medium">DOB:</label>
                             <input type="date" id="date_of_birth" name="date_of_birth" value="{{ old('date_of_birth', $employee->date_of_birth) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" required>
+                            <x-input-error :messages="$errors->get('date_of_birth')" class="mt-2" />
                         </div>
 
                         <div class="xl:col-span-3">
                             <label for="nin" class="inline-block mb-2 text-base font-medium">NIN:</label>
                             <input type="text" id="nin" name="nin" value="{{ old('nin', $employee->nin) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" required>
+                            <x-input-error :messages="$errors->get('nin')" class="mt-2" />
                         </div>
 
                         <div class="xl:col-span-3">
                             <label for="gender" class="inline-block mb-2 text-base font-medium">Gender:</label>
                             <input type="text" id="gender" name="gender" value="{{ old('gender', $employee->gender) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" required>
+                            <x-input-error :messages="$errors->get('gender')" class="mt-2" />
                         </div>
 
                         <div class="xl:col-span-3">
                             <label for="address" class="inline-block mb-2 text-base font-medium">Address:</label>
                             <input type="text" id="address" name="address" value="{{ old('address', $employee->address) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" required>
+                            <x-input-error :messages="$errors->get('address')" class="mt-2" />
                         </div>
-
                         <div class="xl:col-span-3">
                             <label for="department" class="inline-block mb-2 text-base font-medium">Department:</label>
-                            <input type="text" id="department" name="department" value="{{ old('department', $employee->department) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" required>
+                            <x-select-input id="department_id" name="department_id" required>
+                                <option selected="">-- Select Department --</option>
+                                @foreach ($departments as $department)
+                                    <option value="{{ $department->id }}" {{ $department->id == old('department_id', $employee->department_id) ? 'selected' : '' }}>{{ $department->name }}</option>
+                                @endforeach
+                            </x-select-input>
+                            <x-input-error :messages="$errors->get('department_id')" class="mt-2" />
                         </div>
 
                         <div class="xl:col-span-3">
                             <label for="designation" class="inline-block mb-2 text-base font-medium">Designation:</label>
                             <input type="text" id="designation" name="designation" value="{{ old('designation', $employee->designation) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" required>
+                            <x-input-error :messages="$errors->get('designation')" class="mt-2" />
                         </div>
 
                         <div class="xl:col-span-3">
                             <label for="status" class="inline-block mb-2 text-base font-medium">Status:</label>
                             <input type="text" id="status" name="status" value="{{ old('status', $employee->status) }}" class="form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" required>
+                            <x-input-error :messages="$errors->get('status')" class="mt-2" />
                         </div>
 
                     </div>

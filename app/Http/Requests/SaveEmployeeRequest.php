@@ -32,9 +32,18 @@ class SaveEmployeeRequest extends FormRequest
             'date_of_birth' => 'required|date|before:today',
             'address' => 'required|string|max:1000',
             'gender' => 'required|string|max:10',
-           'department' => 'required|string|max:20',
+            'department_id' => 'required|numeric|exists:departments,id',
             'designation' => 'required|string|max:20',
             'status' => 'required|string|max:20',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'department_id.required' => 'The employee must be assigned department',
+            'department_id.numeric' => 'The department chosen is invalid',
+            'department_id.exists' => 'The department chosen does not exist on the system'
         ];
     }
 }

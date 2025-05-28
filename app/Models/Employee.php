@@ -19,21 +19,26 @@ class Employee extends Authenticatable
         'phone_number',
         'gender',
         'date_of_birth',
-        'department',
+        'department_id',
         'designation',
         'status',
         'address',
     ];
 
     protected $hidden = [
-            'password',
-        ];
+        'password',
+    ];
 
     protected function casts(): array{
         return [
             'password' => 'hashed',
         ];
-      }
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'department_id');
+    }
 }
 
     

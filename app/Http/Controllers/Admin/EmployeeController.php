@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Employee;
@@ -29,7 +30,7 @@ class EmployeeController extends Controller
 
   
 
-        $departments = Employee::select('department')->distinct()->pluck('department');
+        $departments = Department::get();
 
         return view('admin.employee.index', compact('employees', 'departments'));
     }
@@ -37,7 +38,8 @@ class EmployeeController extends Controller
 
     public function create()
     {
-        return view('admin.employee.create');
+        $departments = Department::where([['status', 'active']])->get();
+        return view('admin.employee.create', compact('departments'));
     }
 
     public function store(SaveEmployeeRequest $request)
@@ -66,7 +68,8 @@ class EmployeeController extends Controller
 
     public function edit(Employee $employee)
     {
-        return view('admin.employee.edit', compact('employee'));
+        $departments = Department::where([['status', 'active']])->get();
+        return view('admin.employee.edit', compact('employee', 'departments'));
     }
 
     public function update(SaveEmployeeUpdateRequest $request, Employee $employee)
