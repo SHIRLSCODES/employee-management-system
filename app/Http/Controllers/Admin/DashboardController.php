@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Department;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,7 @@ class DashboardController extends Controller
 
         $employees = $query->paginate(5)->withQueryString();
 
-        $departments = Employee::select('department')->distinct()->pluck('department');
+        $departments = Department::get();
 
         return view('admin.dashboard', compact('employees', 'departments'));
     }

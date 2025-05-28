@@ -203,8 +203,8 @@
                             <select name="department" class="text-slate-800 dark:text-white bg-transparent form-select border border-gray-300 rounded px-2 py-1">
                                 <option value="" class="text-slate-800 dark:text-black bg-white dark:bg-zinc-700">All Departments</option>
                                 @foreach($departments as $department)
-                                    <option value="{{ $department }}" {{ request('department') == $department ? 'selected' : '' }} class="text-slate-800 dark:text-black bg-white dark:bg-zinc-700">
-                                        {{ ucfirst($department) }}
+                                    <option value="{{ $department->name }}" {{ request('department') == $department ? 'selected' : '' }} class="text-slate-800 dark:text-black bg-white dark:bg-zinc-700">
+                                        {{ ucfirst($department->name) }}
                                     </option>
                                 @endforeach
                             </select>
