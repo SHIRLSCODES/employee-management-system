@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\DepartmentController;
+use App\Http\Controllers\Admin\LeaveController;
 use App\Models\Employee;
 
 Route::prefix('admin')->middleware(['auth:admin'])->name('admin.')->group(function () {
@@ -30,7 +31,20 @@ Route::prefix('admin')->middleware(['auth:admin'])->name('admin.')->group(functi
         Route::get('/{department}/edit', [DepartmentController::class, 'edit'])->name('edit');
         Route::patch('/{department}/update', [DepartmentController::class, 'update'])->name('update');
         Route::post('/{department}/destroy', [DepartmentController::class, 'destroy'])->name('destroy');
+        Route::get('/search-departments', [DepartmentController::class, 'search'])->name('search');
+
     });
+
+    Route::get('/leaves', [LeaveController::class, 'index'])->name('leaves.index');
+    Route::get('/leaves/create', [LeaveController::class, 'create'])->name('leaves.create');
+    Route::get('/leaves/{leave}/show', [LeaveController::class, 'show'])->name('leaves.show');
+    Route::patch('/leaves/{leave}/approve', [LeaveController::class, 'approve'])->name('leaves.approve');
+    Route::patch('/leaves/{leave}/deny', [LeaveController::class, 'deny'])->name('leaves.deny');
+    Route::get('/leaves/create', [LeaveController::class, 'create'])->name('leaves.create');
+    Route::post('/store',[LeaveController::class, 'store'])->name('leaves.store');
+    Route::get('/leaves/{leave}/edit', [LeaveController::class, 'edit'])->name('leaves.edit');
+    Route::patch('/leaves/{leave}/update', [LeaveController::class, 'update'])->name('leaves.update');
+    
 });
 
 require __DIR__.'/auth.php';

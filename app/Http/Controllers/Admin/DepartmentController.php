@@ -31,6 +31,7 @@ class DepartmentController extends Controller
     {
         return view('admin.departments.create');
     }
+
     public function store(SaveDepartmentRequest $request)
     {
         try{
@@ -41,16 +42,19 @@ class DepartmentController extends Controller
             $validated['last_updated_by'] =  $currentUser->id;
             $create = Department::create($validated);
             return redirect()->route('admin.departments.index')->with('success', 'Department created successfully');
-        }catch(Exception $e)
+        }
+        catch(Exception $e)
         {
             Log::error('Admin DepartmentController Store Error: '.$e->getMessage());
             return redirect()->back()->withInput();
         }
     }
+
     public function edit(Department $department)
     {
         return view('admin.departments.edit', compact('department'));
     }
+    
     public function update(SaveDepartmentUpdateRequest $request, Department $department)
     {
         try{
@@ -72,5 +76,17 @@ class DepartmentController extends Controller
             return redirect()->back()->withInput()->with('error', 'An unexpected Error occured, please try again');
         }
     }
+    public function search(Request $request)
+        {
+            $query = $request->input('query');
+
+            $departments = Department::where('name', 'like', "%{$query}%")
+                        ->orWhere('code', 'like', "%{$query}%")
+                        ->get();
+
+            return response()->json([
+                'html' => view('partials.admin.department-rows', compact('departments'))->render()
+            ]);
+        }
 }
 

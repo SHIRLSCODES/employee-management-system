@@ -1,5 +1,5 @@
 <x-admin-layout>
-   
+
     <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
 
         <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
@@ -106,7 +106,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                <x-pagination-tailwind :items="$employees" />
+                   <x-pagination-tailwind :items="$employees" />
 
                 </div>
             </div>

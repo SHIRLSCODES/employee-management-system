@@ -16,7 +16,7 @@
             </ul>
         </div>
         <div class="relative grow">
-            <input type="text" id="department-search" class="mb-4 ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Search by name or email..." autocomplete="off">
+            <input type="text" id="department-search" class="mb-4 ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Search department..." autocomplete="off">
             <i data-lucide="search" class="inline-block size-4 absolute ltr:left-2.5 rtl:right-2.5 top-2.5 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-600"></i>
         </div>
         <div class="card">
@@ -51,7 +51,7 @@
                                 <th class="px-3.5 py-2.5 font-semibold border-b border-slate-200 dark:border-zink-500">Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="department-table-body">
                             @foreach ($departments as $department)
                                 <tr class="even:bg-slate-50 hover:bg-slate-50 even:hover:bg-slate-100 dark:even:bg-zink-600/50 dark:hover:bg-zink-600 dark:even:hover:bg-zink-600">
                                     <td class="px-3.5 py-2.5 border-y border-slate-200 dark:border-zink-500">{{ $department->name }}</td>
@@ -101,7 +101,7 @@
                 let query = $('#department-search').val();
 
                 $.ajax({
-                    url: "{{ route('admin.departments.index') }}",
+                    url: "{{ route('admin.departments.search') }}",
                     type: "GET",
                     data: { query: query },
                     success: function (data) {

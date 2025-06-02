@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\EmployeeLoginController;
+use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Models\Employee;
 
@@ -36,6 +37,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
 
     Route::get('{employee}/my-details', [EmployeeController::class, 'show'])->name('my-details');
+
+    Route::get('/leaves', [LeaveController::class, 'index'])->name('leaves.index');
+    Route::get('/leaves/create', [LeaveController::class, 'create'])->name('leaves.create');
+    Route::post('/store',[LeaveController::class, 'store'])->name('leaves.store');
+    Route::get('/leaves/{leave}/edit', [LeaveController::class, 'edit'])->name('leaves.edit');
+    Route::patch('/leaves/{leave}/update', [LeaveController::class, 'update'])->name('leaves.update');
+    Route::get('/leaves/{leave}/show', [LeaveController::class, 'show'])->name('leaves.show');
+    Route::delete('/leaves/{leave}/delete', [LeaveController::class, 'destroy'])->name('leaves.destroy');
 });
 
 require __DIR__.'/auth.php';
