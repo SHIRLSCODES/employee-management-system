@@ -45,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/leaves/{leave}/update', [LeaveController::class, 'update'])->name('leaves.update');
     Route::get('/leaves/{leave}/show', [LeaveController::class, 'show'])->name('leaves.show');
     Route::delete('/leaves/{leave}/delete', [LeaveController::class, 'destroy'])->name('leaves.destroy');
+    Route::get('/leaves/balance', [LeaveController::class, 'balance'])->name('leaves.balance');
 });
 
 require __DIR__.'/auth.php';

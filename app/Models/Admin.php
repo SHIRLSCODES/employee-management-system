@@ -14,4 +14,22 @@ class Admin extends Authenticatable
       'email',
       'password',
     ];
+
+    public function leaveRequests()
+    {
+        return $this->hasMany(LeaveRequest::class);
+    }
+
+    public function usedLeaveDays()
+    {
+        return $this->leaveRequests()
+                    ->where('status', 'approved')
+                    ->sum('number_of_days');
+    }
+
+    public function leaveBalance()
+    {
+        return $this->total_leave_days - $this->usedLeaveDays();
+    }
+    
 }

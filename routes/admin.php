@@ -35,15 +35,20 @@ Route::prefix('admin')->middleware(['auth:admin'])->name('admin.')->group(functi
 
     });
 
-    Route::get('/leaves', [LeaveController::class, 'index'])->name('leaves.index');
-    Route::get('/leaves/create', [LeaveController::class, 'create'])->name('leaves.create');
-    Route::get('/leaves/{leave}/show', [LeaveController::class, 'show'])->name('leaves.show');
-    Route::patch('/leaves/{leave}/approve', [LeaveController::class, 'approve'])->name('leaves.approve');
-    Route::patch('/leaves/{leave}/deny', [LeaveController::class, 'deny'])->name('leaves.deny');
-    Route::get('/leaves/create', [LeaveController::class, 'create'])->name('leaves.create');
-    Route::post('/store',[LeaveController::class, 'store'])->name('leaves.store');
-    Route::get('/leaves/{leave}/edit', [LeaveController::class, 'edit'])->name('leaves.edit');
-    Route::patch('/leaves/{leave}/update', [LeaveController::class, 'update'])->name('leaves.update');
+    Route::prefix('leaves')->name('leaves.')->group(function () {
+        Route::get('/', [LeaveController::class, 'index'])->name('index');
+        Route::get('/create', [LeaveController::class, 'create'])->name('create');
+        Route::get('/{leave}/show', [LeaveController::class, 'show'])->name('show');
+        Route::patch('/{leave}/approve', [LeaveController::class, 'approve'])->name('approve');
+        Route::patch('/{leave}/deny', [LeaveController::class, 'deny'])->name('deny');
+        Route::post('/store',[LeaveController::class, 'store'])->name('store');
+        Route::get('/{leave}/edit', [LeaveController::class, 'edit'])->name('edit');
+        Route::patch('/{leave}/update', [LeaveController::class, 'update'])->name('update');
+        Route::get('/setup', [LeaveController::class, 'setup'])->name('setup');
+        Route::patch('/setup/update', [LeaveController::class, 'updateLeaveDays'])->name('updateLeaveDays');
+        Route::patch('/setup/updateAllEmployees', [LeaveController::class, 'updateAllEmployees'])->name('updateAllEmployees');
+        
+    });
     
 });
 

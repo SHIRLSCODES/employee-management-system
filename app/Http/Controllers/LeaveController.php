@@ -17,7 +17,11 @@ class LeaveController extends Controller
 
     public function create()
     {
-       return view('leaves.create');
+        if (auth()->user()->leaveBalance() == 0) {
+            return redirect()->route('leaves.index')->with('error', 'You have used all your leave days.');
+        }
+
+        return view('leaves.create');
     }
 
     public function store(SaveLeaveRequest $request)
@@ -33,6 +37,10 @@ class LeaveController extends Controller
 
     public function show(LeaveRequest $leave)
     {
+        if (auth()->id() !== $leave->employee_id) {
+            abort(403, 'Unauthorized action, you cannot view this page');
+        }
+
         return view('leaves.show', compact('leave'));
     }
 
@@ -61,5 +69,12 @@ class LeaveController extends Controller
         $leave->delete();
 
         return redirect()->route('leaves.index')->with('success', 'Your leave request has been deleted successfully.');
+    }
+
+    public function balance(LeaveRequest $leave)
+    {
+        $employee = auth()->user();
+
+        return view('leaves.balance', compact('employee'));
     }
 }

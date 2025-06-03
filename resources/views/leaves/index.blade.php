@@ -15,7 +15,6 @@
 
       <div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5">
 
-    <!-- Top card: Greeting and Create button -->
     <div class="col-span-12">
         <div class="relative overflow-hidden card bg-slate-900">
             <div class="relative card-body">
@@ -38,7 +37,6 @@
         </div>
     </div>
 
-    <!-- Leave Requests Table -->
     <div class="col-span-12">
         <div class="card">
             <div class="card-body">
@@ -50,7 +48,7 @@
                     </div>
                 @endif
                 @if (session('error'))
-                    <div id="error-message" class="mb-4 p-3 bg-red-600 text-white rounded-md">
+                    <div id="error-message" class="mb-4 p-3 bg-red-500 text-white rounded-md">
                         {{ session('error') }}
                     </div>
                 @endif
