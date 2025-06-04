@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\LeaveController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Models\Employee;
 
 Route::prefix('admin')->middleware(['auth:admin'])->name('admin.')->group(function () {
@@ -49,7 +50,15 @@ Route::prefix('admin')->middleware(['auth:admin'])->name('admin.')->group(functi
         Route::patch('/setup/updateAllEmployees', [LeaveController::class, 'updateAllEmployees'])->name('updateAllEmployees');
         
     });
-    
+
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('/index',[AdminController::class, 'index'])->name('index');
+        Route::get('/create', [AdminController::class, 'create'])->name('create');
+        Route::post('/store', [AdminController::class, 'store'])->name('store');
+        Route::get('/{admin}/edit', [AdminController::class, 'edit'])->name('edit');
+        Route::patch('/{admin}/update', [AdminController::class, 'update'])->name('update');
+        Route::delete('/{admin}/delete', [AdminController::class, 'delete'])->name('delete');
+    });
 });
 
 require __DIR__.'/auth.php';

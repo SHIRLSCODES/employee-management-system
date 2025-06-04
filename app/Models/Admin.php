@@ -13,11 +13,12 @@ class Admin extends Authenticatable
       'name',
       'email',
       'password',
+      'department_id',
     ];
 
     public function leaveRequests()
     {
-        return $this->hasMany(LeaveRequest::class);
+        return $this->hasMany(LeaveRequest::class, 'employee_id');
     }
 
     public function usedLeaveDays()
@@ -32,4 +33,8 @@ class Admin extends Authenticatable
         return $this->total_leave_days - $this->usedLeaveDays();
     }
     
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
 }

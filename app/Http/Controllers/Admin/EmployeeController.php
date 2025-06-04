@@ -39,6 +39,7 @@ class EmployeeController extends Controller
     public function create()
     {
         $departments = Department::where([['status', 'active']])->get();
+        
         return view('admin.employee.create', compact('departments'));
     }
 

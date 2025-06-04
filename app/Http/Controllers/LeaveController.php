@@ -71,7 +71,7 @@ class LeaveController extends Controller
         return redirect()->route('leaves.index')->with('success', 'Your leave request has been deleted successfully.');
     }
 
-    public function balance(LeaveRequest $leave)
+    public function balance()
     {
         $employee = auth()->user();
 
