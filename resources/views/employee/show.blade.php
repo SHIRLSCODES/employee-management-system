@@ -49,7 +49,7 @@
                 </div>
                 <div>
                     <p class="text-gray-500 dark:text-gray-400 mb-1">Department</p>
-                    <p class="font-medium text-gray-900 dark:text-white">{{ $employee->department }}</p>
+                    <p class="font-medium text-gray-900 dark:text-white">{{ $employee->department->name }}</p>
                 </div>
                 <div>
                     <p class="text-gray-500 dark:text-gray-400 mb-1">Designation</p>
@@ -67,8 +67,8 @@
 
             <!-- Back Button -->
             <div class="mt-8">
-                <a href="{{ route('employee.index') }}" class="inline-block bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-800 dark:text-white font-semibold py-2 px-6 rounded-lg transition">
-                    ← Back to Employees
+                <a href="{{ route('dashboard') }}" class="inline-block bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-800 dark:text-white font-semibold py-2 px-6 rounded-lg transition">
+                    ← Back to Dashboard
                 </a>
             </div>
         </div>

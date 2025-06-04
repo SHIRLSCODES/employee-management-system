@@ -1,4 +1,5 @@
 <x-app-layout>
+   
     <div class="container-fluid group-data-[content=boxed]:max-w-boxed mx-auto">
 
         <div class="flex flex-col gap-2 py-4 md:flex-row md:items-center print:hidden">
@@ -14,6 +15,30 @@
                 </li>
             </ul>
         </div>
+        <div class="relative grow">
+            <input type="text" id="employee-search" class="mb-4 ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Search by name or email..." autocomplete="off">
+            <i data-lucide="search" class="inline-block size-4 absolute ltr:left-2.5 rtl:right-2.5 top-2.5 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-600"></i>
+        </div>
+        <form method="GET" action="{{ route('admin.employee.index') }}" class="mb-4 flex gap-4 items-center">
+            <select name="department" class="text-slate-800 dark:text-white bg-transparent form-select border border-gray-300 rounded px-2 py-1">
+                <option value="" class="text-slate-800 dark:text-black bg-white dark:bg-zinc-700">All Departments</option>
+                @foreach($departments as $department)
+                    <option value="{{ $department }}" {{ request('department') == $department ? 'selected' : '' }} class="text-slate-800 dark:text-black bg-white dark:bg-zinc-700">
+                        {{ ucfirst($department) }}
+                    </option>
+                @endforeach
+            </select>
+
+            <select name="status" class="text-slate-800 dark:text-white bg-transparent form-select border border-gray-300 rounded px-2 py-1">
+                <option value="" class="text-slate-800 dark:text-black bg-white dark:bg-zinc-700">All Status</option>
+                <option value="active" {{ request('status') == 'active' ? 'selected' : '' }} class="text-slate-800 dark:text-black bg-white dark:bg-zinc-700">Active</option>
+                <option value="on leave" {{ request('status') == 'on leave' ? 'selected' : '' }} class="text-slate-800 dark:text-black bg-white dark:bg-zinc-700">On Leave</option>
+                <option value="resigned" {{ request('status') == 'resigned' ? 'selected' : '' }} class="text-slate-800 dark:text-black bg-white dark:bg-zinc-700">Resigned</option>
+            </select>
+
+           <button type="submit" class="bg-blue-600 text-white px-3 py-1 border border-gray-300 rounded">Filter</button>
+        </form>
+
         <div class="card">
             <div class="card-body">
                 <h6 class="mb-4 text-15">All Employees</h6>
@@ -35,9 +60,9 @@
                         document.getElementById('error-message')?.remove();
                        }, 10000);
                     </script> 
-
+                  
                 <div class="overflow-x-auto">
-                    <table class="w-full">
+                    <table class="w-full" id="employee-table">
                         <thead class="ltr:text-left rtl:text-right">      
                             <tr class="bg-gray-100 dark:bg-gray-700 text-left text-xs font-semibold uppercase text-gray-600 dark:text-gray-300">
                                 <th class="px-4 py-2">Employee No</th>
@@ -48,7 +73,7 @@
                                 <th class="px-4 py-2">Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="employee-table-body">
                             @foreach ($employees as $employee)
                                 <tr class="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
                                     <td class="px-4 py-2">{{ $employee->employee_no }}</td>
@@ -81,11 +106,36 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <div class="mt-4 flex justify-center">
-                        {{ $employees->links() }}
-                    </div>
+                <x-pagination-tailwind :items="$employees" />
+
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            function debounce(func, delay) {
+                let timeout;
+                return function (...args) {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => func.apply(this, args), delay);
+                };
+            }
+
+            function searchEmployees() {
+                let query = $('#employee-search').val();
+
+                $.ajax({
+                    url: "{{ route('admin.employee.index') }}",
+                    type: "GET",
+                    data: { query: query },
+                    success: function (data) {
+                        $('#employee-table-body').html(data.html);
+                    }
+                });
+            }
+
+            $('#employee-search').on('keyup', debounce(searchEmployees, 300));
+        </script>
 </x-app-layout>

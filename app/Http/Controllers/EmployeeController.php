@@ -4,29 +4,53 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Employee;
+use App\Mail\WelcomeEmployeeMail;
 use App\Http\Requests\SaveEmployeeRequest;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\SaveEmployeeUpdateRequest;
 
 class EmployeeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $employees = Employee::paginate(10);
+        $query = Employee::query();
 
-        return view('employee.index', compact('employees'));
+        if ($request->filled('department')) {
+            $query->where('department', $request->department);
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+      
+        $employees = $query->paginate(5)->withQueryString();
+
+        $departments = Employee::select('department')->distinct()->pluck('department');
+
+        return view('admin.employee.index', compact('employees', 'departments'));
     }
 
 
     public function create()
     {
-        return view('employee.create');
+        return view('admin.employee.create');
     }
 
     public function store(SaveEmployeeRequest $request)
     {
-        $employee = Employee::create($request ->validated());
+        $validated = $request->validated();
 
-        return redirect()->route('employee.index')->with('success','Employee created successfully');
+        $plainPassword = $validated['password'];
+
+        $validated['password'] = Hash::make($plainPassword);
+
+        $employee = Employee::create($validated);
+
+        $admin = auth('admin')->user();
+
+        // Mail::to($employee->email)->send(new WelcomeEmployeeMail($employee, $plainPassword, $admin));
+
+        return redirect()->route('admin.employee.index')->with('success', 'Employee created and email sent successfully.');
     }
 
     public function show(Employee $employee)
@@ -36,14 +60,14 @@ class EmployeeController extends Controller
 
     public function edit(Employee $employee)
     {
-        return view('employee.edit', compact('employee'));
+        return view('admin.employee.edit', compact('employee'));
     }
 
     public function update(SaveEmployeeUpdateRequest $request, Employee $employee)
     {
         $employee->update($request->validated());
 
-        return redirect()->route('employee.index')->with('success', 'Employee updated successfully');
+        return redirect()->route('admin.employee.index')->with('success', 'Employee updated successfully');
     }
 
 
@@ -53,6 +77,21 @@ class EmployeeController extends Controller
 
         $employee->delete();
 
-        return redirect()->route('employee.index')->with('success', 'Employee deleted successfully');
+        return redirect()->route('admin.employee.index')->with('success', 'Employee deleted successfully');
     }
+
+    public function search(Request $request)
+        {
+            $query = $request->input('query');
+
+            $employees = Employee::where('first_name', 'like', "%{$query}%")
+                        ->orWhere('last_name', 'like', "%{$query}%")
+                        ->orWhere('email', 'like', "%{$query}%")
+                        ->get();
+
+            // Return partial HTML to update the table
+            return response()->json([
+                'html' => view('partials.employee-rows', compact('employees'))->render()
+            ]);
+        }
 }

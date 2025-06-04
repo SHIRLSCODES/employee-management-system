@@ -159,88 +159,21 @@
                    
                     <div class="grid items-center grid-cols-12">
                         <div class="col-span-12 lg:col-span-8 2xl:col-span-7">
-                            <h5 class="mb-3 font-normal tracking-wide text-slate-200">Welcome Admin User 🎉</h5>
-                            <form method="GET" action="{{ route('employee.create') }}"> 
-                                <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-500/20 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-500/20 dark:ring-custom-400/20">Create Employee</button>
-                            </form>
+                            <h5 class="mb-3 font-normal tracking-wide text-slate-200">
+
+                                    Welcome {{ auth()->user()->first_name }} 🎉 (Employee)
+                            </h5> 
+                            <form method="GET" action="{{ route('my-details', auth()->user()->id) }}"> 
+                                <button type="submit" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-500/20 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-500/20 dark:ring-custom-400/20">View my details</button>
+                            </form> 
                         </div>
                        
                         <div class="hidden col-span-12 2xl:col-span-3 lg:col-span-2 lg:col-start-11 2xl:col-start-10 lg:block">
-                            <img src="assets/images/employeebg.png" alt="" class="w-80 h-40 object-cover ltr:2xl:ml-auto rtl:2xl:mr-auto">
+                            <img src="assets/images/employeebg.png" alt="..." class="w-80 h-40 object-cover ltr:2xl:ml-auto rtl:2xl:mr-auto">
                         </div>
                     </div>
                 </div>
             </div><!--end col-->
          
        
-            <div class="col-span-12 card 2xl:col-span-12">
-                <div class="card-body">
-                    <div class="grid items-center grid-cols-1 gap-3 mb-5 2xl:grid-cols-12">
-                        <div class="2xl:col-span-3">
-                            <h6 class="text-15">Employees</h6>
-                        </div><!--end col-->
-                        <div class="2xl:col-span-3 2xl:col-start-10">
-                            <div class="flex gap-3">
-                                <div class="relative grow">
-                                    <input type="text" class="ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200" placeholder="Search for ..." autocomplete="off">
-                                    <i data-lucide="search" class="inline-block size-4 absolute ltr:left-2.5 rtl:right-2.5 top-2.5 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-600"></i>
-                                </div>
-                                <button type="button" class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"><i class="align-baseline ltr:pr-1 rtl:pl-1 ri-download-2-line"></i> Export</button>
-                            </div>
-                        </div><!--end col-->
-                    </div><!--end grid-->
-                    <div class="overflow-x-auto">
-                        <table class="w-full whitespace-nowrap">
-                            <thead class="ltr:text-left rtl:text-right bg-slate-100 text-slate-500 dark:text-zink-200 dark:bg-zink-600">
-                                <tr>
-                                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">Employee NO</th>
-                                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">Name</th>
-                                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">Email</th>
-                                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">Phone No</th>
-                                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">Status</th>
-                                    <th class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                 @foreach ($employees as $employee)
-                                    <tr class="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
-                                        <td class="px-4 py-2">{{ $employee->employee_no }}</td>
-                                        <td class="px-4 py-2">{{ $employee->first_name .' '. $employee->last_name}}</td>
-                                        <td class="px-4 py-2">{{ $employee->email }}</td>
-                                        <td class="px-4 py-2">{{ $employee->phone_number }}</td>
-                                        <td class="px-4 py-2">
-                                            <span class="px-2 py-1 rounded-full text-sm font-semibold border
-                                                @if($employee->status === 'Active') bg-green-600 text-green-600 border-green-500 
-                                                @elseif($employee->status === 'on leave') bg-yellow-600 text-yellow-600 border-yellow-500 
-                                                @elseif($employee->status === 'resigned') bg-red-600 text-red-600 border-red-500 
-                                                @else bg-gray-600 text-gray-800 border-gray-400 
-                                                @endif
-                                            ">
-                                                {{ ucfirst($employee->status) }}
-                                            </span>
-                                        </td>
-
-                                        <td class="px-4 py-2">
-                                            <div class="flex items">
-                                                <a href="{{ route('employee.show', $employee->id) }}" class="text-blue-500 hover:text-gray-800 mr-2">View</a>
-                                                <a href="{{ route('employee.edit', $employee->id) }}" class="text-yellow-600 hover:text-yellow-800 mr-2">Edit</a>
-                                                <form action="{{ route('employee.delete', $employee->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this employee?');">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="text-red-600 hover:text-red-800">Delete</button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                  
-                </div>
-            </div><!--end col-->
-         
-       
-        </div><!--end grid-->
-    </div>
 </x-app-layout>

@@ -20,23 +20,31 @@ class SaveEmployeeUpdateRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules():array
-        {
-            $employeeId = $this->route('employee')->id;
+    {
+        $employeeId = $this->route('employee')->id;
 
-            return [
-                'employee_no' => 'required|string|max:10|unique:employees,employee_no,' . $employeeId,
-                'first_name' => 'required|string|max:255',
-                'last_name' => 'required|string|max:20',
-                'nin' => 'required|string|max:20|unique:employees,nin,' . $employeeId,
-                'email' => 'required|email|max:255|unique:employees,email,' . $employeeId,
-                'phone_number' => 'required|string|max:20',
-                'date_of_birth' => 'required|date|before:today',
-                'address' => 'required|string|max:1000',
-                'gender' => 'required|string|max:10',
-                'department' => 'required|string|max:20',
-                'designation' => 'required|string|max:20',
-                'status' => 'required|string|max:20',
-            ];
-        }
+        return [
+            'employee_no' => 'required|string|max:10|unique:employees,employee_no,' . $employeeId,
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:20',
+            'nin' => 'required|string|max:20|unique:employees,nin,' . $employeeId,
+            'email' => 'required|email|max:255|unique:employees,email,' . $employeeId,
+            'phone_number' => 'required|string|max:20',
+            'date_of_birth' => 'required|date|before:today',
+            'address' => 'required|string|max:1000',
+            'gender' => 'required|string|max:10',
+            'department_id' => 'required|numeric|exists:departments,id',
+            'designation' => 'required|string|max:20',
+            'status' => 'required|string|max:20',
+        ];
+    }
 
+    public function messages()
+    {
+        return [
+            'department_id.required' => 'The employee must be assigned department',
+            'department_id.numeric' => 'The department chosen is invalid',
+            'department_id.exists' => 'The department chosen does not exist on the system'
+        ];
+    }
 }
