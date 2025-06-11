@@ -51,7 +51,14 @@
                             <tbody>
                                 @foreach ($leaveRequests as $leaveRequest)
                                     <tr class="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
-                                        <td class="px-4 py-2">{{ $leaveRequest->employee->first_name }} {{ $leaveRequest->employee->last_name }}</td>
+                                        
+                                        <td class="px-4 py-2">
+                                            @if($leaveRequest->admin_id)
+                                                {{ $leaveRequest->admin->name }} 
+                                            @elseif($leaveRequest->employee_id)
+                                                {{ $leaveRequest->employee->first_name }} {{ $leaveRequest->employee->last_name }}
+                                            @endif  
+                                        </td>
                                         <td class="px-4 py-2">{{ $leaveRequest->leave_type }}</td>
                                         <td class="px-4 py-2">{{ $leaveRequest->reason }}</td>
                                         <td class="px-4 py-2">
@@ -72,14 +79,16 @@
                                             <div class="flex items-center gap-2">
                                                 <a href="{{ route('admin.leaves.show', $leaveRequest->id) }}" class="text-blue-500 hover:text-blue-600">View</a>
 
-                                                @if ($leaveRequest->status === 'pending')
-                                                    <form action="{{ route('admin.leaves.approve', $leaveRequest->id) }}" method="POST">
+                                                @if ($leaveRequest->admin_id === auth('admin')->id())
+                                                    <span class="text-blue-500">Your request</span>
+                                                @elseif ($leaveRequest->status === 'pending')
+                                                    <form action="{{ route('admin.leaves.approve', $leaveRequest->id) }}" method="POST" class="inline-block">
                                                         @csrf
                                                         @method('PATCH')
                                                         <button type="submit" class="text-green-600 hover:text-green-800">Approve</button>
                                                     </form>
 
-                                                    <form action="{{ route('admin.leaves.deny', $leaveRequest->id) }}" method="POST">
+                                                    <form action="{{ route('admin.leaves.deny', $leaveRequest->id) }}" method="POST" class="inline-block">
                                                         @csrf
                                                         @method('PATCH')
                                                         <button type="submit" class="text-red-600 hover:text-red-800">Deny</button>
@@ -87,6 +96,7 @@
                                                 @else
                                                     <span class="text-gray-400">No actions</span>
                                                 @endif
+
                                             </div>
                                         </td>
                                     </tr>

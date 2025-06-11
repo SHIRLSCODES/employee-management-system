@@ -47,7 +47,7 @@ class LeaveController extends Controller
     {
         $data = $request->validated();
 
-        $data['employee_id'] = auth()->id();
+        $data['admin_id'] = auth()->id();
 
         $leaveRequests = LeaveRequest::create($data);
 
@@ -64,7 +64,7 @@ class LeaveController extends Controller
          if (in_array($leave->status, ['approved', 'denied'])) {
             abort(403, 'You cannot edit a leave request that has been approved or denied.');
         }
-        if (auth()->id() !== $leave->employee_id) {
+        if (auth()->id() !== $leave->admin_id) {
             abort(403, 'Unauthorized action, you cannot view this page');
         }
         return view('admin.leaves.edit', compact('leave'));

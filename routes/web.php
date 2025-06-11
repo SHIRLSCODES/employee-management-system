@@ -10,6 +10,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\EmployeeLoginController;
 use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\PaymentRequestController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Models\Employee;
 
@@ -46,6 +47,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/leaves/{leave}/show', [LeaveController::class, 'show'])->name('leaves.show');
     Route::delete('/leaves/{leave}/delete', [LeaveController::class, 'destroy'])->name('leaves.destroy');
     Route::get('/leaves/balance', [LeaveController::class, 'balance'])->name('leaves.balance');
+
+    Route::get('/payments', [PaymentRequestController::class, 'index'])->name('payments.index');
+    Route::get('/payments/create', [PaymentRequestController::class, 'create'])->name('payments.create');
+    Route::post('/store', [PaymentRequestController::class, 'store'])->name('payments.store');
+    Route::get('/payments/{paymentRequest}/edit', [PaymentRequestController::class, 'edit'])->name('payments.edit');
+    Route::patch('/payments/{paymentRequest}/update', [PaymentRequestController::class, 'update'])->name('payments.update');
+    Route::get('/payments/{paymentRequest}/show', [PaymentRequestController::class, 'show'])->name('payments.show');
+    Route::delete('/payments/{paymentRequest}/delete', [PaymentRequestController::class, 'destroy'])->name('payments.destroy');
+    
 });
 
 require __DIR__.'/auth.php';

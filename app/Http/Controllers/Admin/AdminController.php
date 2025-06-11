@@ -13,9 +13,23 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-    public function index()
+      public function index(Request $request)
     {
-        return view('admin.admin.index');
+        $query = Admin::query();
+
+        if ($request->filled('department')) {
+            $query->where('department_id', $request->department);
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $admins = $query->paginate(5)->withQueryString();
+
+        $departments = Department::get();
+
+        return view('admin.admin.index', compact('admins', 'departments'));
     }
 
     public function create()
@@ -36,6 +50,18 @@ class AdminController extends Controller
         $admin = Admin::create($validated);
 
         return redirect()->route('admin.admin.create')->with('success', 'Admin created successfully.');
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $admins = Admin::where('name', 'like', "%{$query}%")->orWhere('email', 'like', "%{$query}%")->get();
+
+        // Return partial HTML to update the table
+        return response()->json([
+            'html' => view('partials.admin.admin-rows', compact('admins'))->render()
+            ]);
     }
 }
 

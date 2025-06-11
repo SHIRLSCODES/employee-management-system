@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\LeaveController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\PaymentRequestController;
 use App\Models\Employee;
 
 Route::prefix('admin')->middleware(['auth:admin'])->name('admin.')->group(function () {
@@ -55,9 +56,25 @@ Route::prefix('admin')->middleware(['auth:admin'])->name('admin.')->group(functi
         Route::get('/index',[AdminController::class, 'index'])->name('index');
         Route::get('/create', [AdminController::class, 'create'])->name('create');
         Route::post('/store', [AdminController::class, 'store'])->name('store');
+        Route::get('/{admin}/show', [AdminController::class, 'show'])->name('show');
         Route::get('/{admin}/edit', [AdminController::class, 'edit'])->name('edit');
         Route::patch('/{admin}/update', [AdminController::class, 'update'])->name('update');
         Route::delete('/{admin}/delete', [AdminController::class, 'delete'])->name('delete');
+        Route::get('/search', [AdminController::class, 'search'])->name('search');
+    });
+
+    Route::prefix('payments')->name('payments.')->group(function () {
+        Route::get('/', [PaymentRequestController::class, 'index'])->name('index');
+        Route::get('/create', [PaymentRequestController::class, 'create'])->name('create');
+        Route::post('/store', [PaymentRequestController::class, 'store'])->name('store');
+        Route::get('/{paymentRequest}/edit', [PaymentRequestController::class, 'edit'])->name('edit');
+        Route::patch('/{paymentRequest}/update', [PaymentRequestController::class, 'update'])->name('update');
+        Route::delete('/{paymentRequest}/delete', [PaymentRequestController::class, 'delete'])->name('delete');
+        Route::get('/{paymentRequest}/show', [PaymentRequestController::class, 'show'])->name('show');
+        Route::patch('/{paymentRequest}/approve', [PaymentRequestController::class, 'approve'])->name('approve');
+        Route::patch('/{paymentRequest}/deny', [PaymentRequestController::class, 'deny'])->name('deny');
+        Route::patch('/{paymentRequest}/finance/approve', [PaymentRequestController::class, 'approveFinance'])->name('approve.finance');
+        Route::patch('/{paymentRequest}/finance/deny', [PaymentRequestController::class, 'denyFinance'])->name('deny.finance');
     });
 });
 
