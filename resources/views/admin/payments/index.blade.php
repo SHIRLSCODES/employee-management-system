@@ -124,16 +124,16 @@
                                                         <form action="{{ route('admin.payments.approve.finance', $payment->id) }}" method="POST" class="inline">
                                                             @csrf
                                                             @method('PATCH')
-                                                            <button type="submit" class="text-green-600 hover:text-green-600 font-medium bg-transparent px-2 py-1 rounded" onclick="return confirm('Are you sure you want to approve this payment request for finance?')">
-                                                                Finance Approve
-                                                            </button>
+                                                            @can('approve payments')
+                                                                <button type="submit" class="text-green-600 hover:text-green-600 font-medium bg-transparent px-2 py-1 rounded" onclick="return confirm('Are you sure you want to approve this payment request for finance?')">Approve</button>
+                                                            @endcan
                                                         </form>
                                                         <form action="{{ route('admin.payments.deny.finance', $payment->id) }}" method="POST" class="inline">
                                                             @csrf
                                                             @method('PATCH')
-                                                            <button type="submit" class="text-red-600 hover:text-red-600 font-medium bg-transparent px-2 py-1 rounded" onclick="return confirm('Are you sure you want to deny this payment request?')">
-                                                                Finance Deny
-                                                            </button>
+                                                            @can('deny payments')
+                                                                <button type="submit" class="text-red-600 hover:text-red-600 font-medium bg-transparent px-2 py-1 rounded" onclick="return confirm('Are you sure you want to deny this payment request for finance?')">Deny</button>
+                                                            @endcan
                                                         </form>
                                                     @endif
 

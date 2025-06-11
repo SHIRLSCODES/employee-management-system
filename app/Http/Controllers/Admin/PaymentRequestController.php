@@ -90,9 +90,6 @@ class PaymentRequestController extends Controller
     
    public function approveFinance(PaymentRequest $paymentRequest)
     {
-        if (auth()->user()->department_id !== 7) {
-            abort(403, 'Unauthorized action. Only finance department can give final approval for payment requests.');
-        }
         if (!in_array($paymentRequest->status, ['approved_by_admin', 'denied_by_admin'])) {
         abort(403, 'Payment request must be processed by admin first.');
         }
@@ -105,9 +102,6 @@ class PaymentRequestController extends Controller
 
     public function denyFinance(PaymentRequest $paymentRequest)
     {
-        if (auth()->user()->department_id !== 7) {
-            abort(403, 'Unauthorized action.');
-        }
         if (!in_array($paymentRequest->status, ['approved_by_admin', 'denied_by_admin'])) {
         abort(403, 'Payment request must be processed by admin first.');
         }

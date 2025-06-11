@@ -73,8 +73,8 @@ Route::prefix('admin')->middleware(['auth:admin'])->name('admin.')->group(functi
         Route::get('/{paymentRequest}/show', [PaymentRequestController::class, 'show'])->name('show');
         Route::patch('/{paymentRequest}/approve', [PaymentRequestController::class, 'approve'])->name('approve');
         Route::patch('/{paymentRequest}/deny', [PaymentRequestController::class, 'deny'])->name('deny');
-        Route::patch('/{paymentRequest}/finance/approve', [PaymentRequestController::class, 'approveFinance'])->name('approve.finance');
-        Route::patch('/{paymentRequest}/finance/deny', [PaymentRequestController::class, 'denyFinance'])->name('deny.finance');
+        Route::patch('/{paymentRequest}/finance/approve', [PaymentRequestController::class, 'approveFinance'])->middleware(['permission:approve payments'])->name('approve.finance');
+        Route::patch('/{paymentRequest}/finance/deny', [PaymentRequestController::class, 'denyFinance'])->middleware(['permission:deny payments'])->name('deny.finance');
     });
 });
 

@@ -48,6 +48,12 @@ class AdminController extends Controller
         $validated['password'] = Hash::make($plainPassword);
 
         $admin = Admin::create($validated);
+        
+        $department = $admin->department->name;
+
+        if ($department === 'Finance') {
+            $admin->assignRole('finance-admin');
+        }
 
         return redirect()->route('admin.admin.create')->with('success', 'Admin created successfully.');
     }

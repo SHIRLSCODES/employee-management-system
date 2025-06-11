@@ -5,9 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\LeaveRequest;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\Access\Authorizable;
+use Spatie\Permission\Traits\HasRoles;
 
-class Employee extends Authenticatable
+class Employee extends Authenticatable implements Authorizable
 {
+    use HasRoles;
+    
     protected $guard = 'web';
 
     protected $fillable = [
