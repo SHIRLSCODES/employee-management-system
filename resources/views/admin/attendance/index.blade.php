@@ -46,6 +46,7 @@
                                     <th class="px-4 py-2">Check In</th>
                                     <th class="px-4 py-2">Check Out</th>
                                     <th class="px-4 py-2">Status</th>
+                                    <th class="px-4 py-2">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -113,6 +114,19 @@
                                                 @endif
                                             @endif
                                         </td>
+                                        <td class="px-4 py-2">
+                                            @if ($attendance->late_count >= 3)
+                                                <form action="{{ route('admin.attendance.issueLateQuery', $attendance->id) }}" method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="text-sm text-red-600 bg-transparent border border-red-500 px-3 py-1 rounded hover:bg-red-100">
+                                                        Issue Query
+                                                    </button>
+                                                </form>
+                                            @else
+                                                <span class="text-xs text-gray-400 italic">No action</span>
+                                            @endif
+                                        </td>
+
                                     </tr>
                                 @empty
                                     <tr>

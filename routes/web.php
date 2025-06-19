@@ -16,10 +16,23 @@ use App\Http\Controllers\Admin\DepartmentController;
 use App\Models\Employee;
 
 
+
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+// Route::get('/test-query-mail', function () {
+//     $employee = Employee::first(); 
+//     $admin = Admin::first();       
+
+//     if (!$employee || !$admin) {
+//         return 'Missing test employee or admin.';
+//     }
+
+//     Mail::to($employee->email)->send(new LateAttendanceQueryMail($employee, $admin, 3));
+
+//     return 'Test mail sent to: ' . $employee->email;
+// });
 
 Route::get('/login/employee', [EmployeeLoginController::class, 'showLoginForm'])->name('employee.login');
 Route::post('/login/employee', [EmployeeLoginController::class, 'login']);

@@ -84,6 +84,7 @@ Route::prefix('admin')->middleware(['auth:admin'])->name('admin.')->group(functi
         Route::post('/admin/edit', [AttendanceController::class, 'edit'])->name('edit');
         Route::get('/checkIn', [AttendanceController::class, 'checkIn'])->name('checkIn');
         Route::get('/checkOut', [AttendanceController::class, 'checkOut'])->name('checkOut');
+        Route::post('/issueLateQuery', [AttendanceController::class, 'issueLateQuery'])->name('issueLateQuery');
         Route::get('/admin', [AttendanceController::class, 'adminIndex'])->name('admin-index');
         });
 

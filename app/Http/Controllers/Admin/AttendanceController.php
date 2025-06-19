@@ -6,13 +6,36 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Attendance;
 use App\Http\Requests\SaveAttendanceRequest;
+use App\Mail\LateAttendanceQueryMail;
 
 class AttendanceController extends Controller
 {
     public function index()
     {
-        $attendanceRecords = Attendance::paginate(5);
-
+        $attendanceRecords = Attendance::with('attendable')
+            ->orderBy('attendance_date', 'desc')
+            ->paginate(5);
+        
+        $attendanceRecords->getCollection()->transform(function ($attendance) {
+            // Check if attendable relationship exists
+            if ($attendance->attendable) {
+                $lateCount = Attendance::where('attendable_type', get_class($attendance->attendable))
+                    ->where('attendable_id', $attendance->attendable->id)
+                    ->whereMonth('attendance_date', now()->month)
+                    ->whereYear('attendance_date', now()->year)
+                    ->get()
+                    ->filter(fn ($record) => $record->is_late)
+                    ->count();
+                
+                $attendance->late_count = $lateCount;
+            } else {
+                // Handle case where attendable is null
+                $attendance->late_count = 0;
+            }
+            
+            return $attendance;
+        });
+        
         return view('admin.attendance.index', compact('attendanceRecords'));
     }
     public function adminIndex()
@@ -88,4 +111,28 @@ class AttendanceController extends Controller
 
         return redirect()->route('admin.attendance.checkOut')->with('success', 'Checked out successfully.');
     }
+
+    public function issueLateQuery(Attendance $attendance){
+        $employee = $attendance->attendable;
+
+        $admin = auth('admin')->user();
+
+        $lateCount = Attendance::where('attendable_type', get_class($employee))
+            ->where('attendable_id', $employee->id)
+            ->whereMonth('attendance_date', now()->month)
+            ->whereYear('attendance_date', now()->year)
+            ->get()
+            ->filter(function ($record) {
+                return $record->is_late;
+            })->count();
+
+        if ($lateCount < 3) {
+            return back()->with('error', 'User has not reached 3 lateness occurrences this month.');
+        }
+
+        Mail::to($employee->email)->send(new LateAttendanceQueryMail($employee, $admin, $lateCount));
+
+        return back()->with('success', 'Query issued successfully.');
+    }
+    
 }
