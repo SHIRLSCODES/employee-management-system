@@ -19,8 +19,8 @@ class Attendance extends Model
 
     protected $casts = [
         'attendance_date' => 'date',
-        'check_in' => 'datetime',
-        'check_out' => 'datetime',
+        'check_in' => 'datetime:H:i:s',
+        'check_out' => 'datetime:H:i:s',
     ];
 
     public function attendable(): MorphTo
@@ -48,6 +48,18 @@ class Attendance extends Model
         }
 
         return 'Unknown';
+    }
+
+    public function getIsLateAttribute(): bool
+    {
+        if (!$this->check_in) {
+        return false;
+        }
+
+        $checkInTime = $this->check_in->copy()->setDateFrom(now());
+        $lateCutoff = now()->copy()->setTime(8, 30, 0);
+
+        return $checkInTime->gt($lateCutoff);
     }
 
 }

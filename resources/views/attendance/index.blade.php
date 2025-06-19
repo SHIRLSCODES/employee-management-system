@@ -83,6 +83,11 @@
                                     <td class="px-4 py-2">
                                         @if($attendance->check_in)
                                             {{ \Carbon\Carbon::parse($attendance->check_in)->format('h:i A') }}
+                                            @if ($attendance->is_late)
+                                                <span class="text-xs text-red-600 font-semibold ml-2">Late</span>
+                                            @else
+                                                <span class="text-xs text-green-600 font-semibold ml-2">On Time</span>
+                                            @endif
                                         @else
                                             <span class="text-gray-400">--</span>
                                         @endif

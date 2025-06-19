@@ -88,14 +88,29 @@
                                                 <span class="px-2 py-1 rounded-full text-sm font-semibold bg-transparent text-green-600 border border-green-500">
                                                     Complete
                                                 </span>
+                                                @if ($attendance->is_late)
+                                                    <span class="text-xs text-red-600 font-semibold bg-transparent px-2 py-1 rounded">Late</span>
+                                                @else
+                                                    <span class="text-xs text-green-600 font-semibold bg-transparent px-2 py-1 rounded">On Time</span>
+                                                @endif
                                             @elseif($attendance->check_in)
                                                 <span class="px-2 py-1 rounded-full text-sm font-semibold bg-transparent text-yellow-600 border border-yellow-500">
                                                     Active
                                                 </span>
+                                                @if ($attendance->is_late)
+                                                    <span class="text-xs text-red-600 font-semibold bg-transparent px-2 py-1 rounded">Late</span>
+                                                @else
+                                                    <span class="text-xs text-green-600 font-semibold bg-transparent px-2 py-1 rounded">On Time</span>
+                                                @endif
                                             @else
                                                 <span class="px-2 py-1 rounded-full text-sm font-semibold bg-transparent text-red-600 border border-red-500">
                                                     Incomplete
                                                 </span>
+                                                @if ($attendance->is_late)
+                                                    <span class="text-xs text-red-600 font-semibold bg-transparent px-2 py-1 rounded">Late</span>
+                                                @else
+                                                    <span class="text-xs text-green-600 font-semibold bg-transparent px-2 py-1 rounded">On Time</span>
+                                                @endif
                                             @endif
                                         </td>
                                     </tr>
