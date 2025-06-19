@@ -62,6 +62,10 @@ class Employee extends Authenticatable implements Authorizable
         return $this->total_leave_days - $this->usedLeaveDays();
     }
 
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class, 'employee_id');
+    }
 }
 
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\LeaveController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\PaymentRequestController;
+use App\Http\Controllers\Admin\AttendanceController;
 use App\Models\Employee;
 
 Route::prefix('admin')->middleware(['auth:admin'])->name('admin.')->group(function () {
@@ -76,6 +77,16 @@ Route::prefix('admin')->middleware(['auth:admin'])->name('admin.')->group(functi
         Route::patch('/{paymentRequest}/finance/approve', [PaymentRequestController::class, 'approveFinance'])->middleware(['permission:approve payments'])->name('approve.finance');
         Route::patch('/{paymentRequest}/finance/deny', [PaymentRequestController::class, 'denyFinance'])->middleware(['permission:deny payments'])->name('deny.finance');
     });
-});
+
+        Route::prefix('attendance')->name('attendance.')->group(function () {
+        Route::get('/', [AttendanceController::class, 'index'])->name('index');
+        Route::post('/admin/create', [AttendanceController::class, 'create'])->name('create');
+        Route::post('/admin/edit', [AttendanceController::class, 'edit'])->name('edit');
+        Route::get('/checkIn', [AttendanceController::class, 'checkIn'])->name('checkIn');
+        Route::get('/checkOut', [AttendanceController::class, 'checkOut'])->name('checkOut');
+        Route::get('/admin', [AttendanceController::class, 'adminIndex'])->name('admin-index');
+        });
+
+    });
 
 require __DIR__.'/auth.php';
