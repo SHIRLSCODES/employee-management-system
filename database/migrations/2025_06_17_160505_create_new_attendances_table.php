@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::dropIfExists('attendances');
 
-        // Recreate attendances table
+       
         Schema::create('attendances', function (Blueprint $table) {
             $table->id();
             $table->string('attendable_type');
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->time('check_out')->nullable();
             $table->timestamps();
 
-            // Optional: unique constraint to prevent duplicate attendance for same entity and date
+            
             $table->unique(['attendable_type', 'attendable_id', 'attendance_date'], 'attendances_attendable_unique');
         });
     }

@@ -6,7 +6,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\LeaveController;
+use App\Http\Controllers\Admin\StockController;
+use App\Http\Controllers\Admin\StockReturnController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\StockRequestController;
 use App\Http\Controllers\Admin\PaymentRequestController;
 use App\Http\Controllers\Admin\AttendanceController;
 use App\Models\Employee;
@@ -70,7 +73,7 @@ Route::prefix('admin')->middleware(['auth:admin'])->name('admin.')->group(functi
         Route::post('/store', [PaymentRequestController::class, 'store'])->name('store');
         Route::get('/{paymentRequest}/edit', [PaymentRequestController::class, 'edit'])->name('edit');
         Route::patch('/{paymentRequest}/update', [PaymentRequestController::class, 'update'])->name('update');
-        Route::delete('/{paymentRequest}/delete', [PaymentRequestController::class, 'delete'])->name('delete');
+        Route::delete('/{paymentRequest}/delete', [PaymentRequestController::class, 'destroy'])->name('destroy');
         Route::get('/{paymentRequest}/show', [PaymentRequestController::class, 'show'])->name('show');
         Route::patch('/{paymentRequest}/approve', [PaymentRequestController::class, 'approve'])->name('approve');
         Route::patch('/{paymentRequest}/deny', [PaymentRequestController::class, 'deny'])->name('deny');
@@ -86,7 +89,41 @@ Route::prefix('admin')->middleware(['auth:admin'])->name('admin.')->group(functi
         Route::get('/checkOut', [AttendanceController::class, 'checkOut'])->name('checkOut');
         Route::post('/issueLateQuery', [AttendanceController::class, 'issueLateQuery'])->name('issueLateQuery');
         Route::get('/admin', [AttendanceController::class, 'adminIndex'])->name('admin-index');
-        });
+    });
+
+    Route::prefix('stock')->name('stocks.')->group(function () {
+        Route::get('/', [StockController::class, 'index'])->name('index');
+        Route::get('/admin/create', [StockController::class, 'create'])->name('create');
+        Route::post('/admin/store', [StockController::class, 'store'])->name('store');
+        Route::get('/admin/edit', [StockController::class, 'edit'])->name('edit');
+
+    });
+
+    Route::prefix('stockRequisitions')->name('stockRequisitions.')->group(function () {
+        Route::get('/', [StockRequestController::class, 'index'])->name('index');
+        Route::get('/adminIndex', [StockRequestController::class, 'adminIndex'])->name('adminIndex');
+        Route::get('/create', [StockRequestController::class, 'create'])->name('create');
+        Route::post('/store', [StockRequestController::class, 'store'])->name('store');
+        Route::get('/{stockRequisition}/edit', [StockRequestController::class, 'edit'])->name('edit');
+        Route::patch('/{stockRequisition}/update', [StockRequestController::class, 'update'])->name('update');
+        Route::delete('/{stockRequisition}/delete', [StockRequestController::class, 'delete'])->name('delete');
+        Route::get('/{stockRequisition}/show', [StockRequestController::class, 'show'])->name('show');
+        Route::patch('/{stockRequisition}/approve', [StockRequestController::class, 'approve'])->middleware(['permission:approve stock requisitions'])->name('approve');
+        Route::patch('/{stockRequisition}/deny', [StockRequestController::class, 'deny'])->middleware(['permission:deny stock requisitions'])->name('deny');
+    });
+
+    Route::prefix('stockReturns')->name('stockReturns.')->group(function () {
+        Route::get('/', [StockReturnController::class, 'index'])->name('index');
+        Route::get('/adminIndex', [StockReturnController::class, 'adminIndex'])->name('adminIndex');
+        Route::get('/create', [StockReturnController::class, 'create'])->name('create');
+        Route::post('/store', [StockReturnController::class, 'store'])->name('store');
+        Route::get('/{stockReturn}/edit', [StockReturnController::class, 'edit'])->name('edit');
+        Route::patch('/{stockReturn}/update', [StockReturnController::class, 'update'])->name('update');
+        Route::delete('/{stockReturn}/delete', [StockReturnController::class, 'delete'])->name('delete');
+        Route::get('/{stockReturn}/show', [StockReturnController::class, 'show'])->name('show');
+        Route::patch('/{stockReturn}/approve', [StockReturnController::class, 'approve'])->middleware(['permission:approve stock returns'])->name('approve');
+        Route::patch('/{stockReturn}/deny', [StockReturnController::class, 'deny'])->middleware(['permission:deny stock returns'])->name('deny');
+    });
 
     });
 

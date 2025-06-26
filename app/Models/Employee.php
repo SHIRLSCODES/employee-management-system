@@ -66,6 +66,18 @@ class Employee extends Authenticatable implements Authorizable
     {
         return $this->hasMany(Attendance::class, 'employee_id');
     }
+
+    public function stockRequisitions() {
+        return $this->morphMany(StockRequisition::class, 'requestable');
+    }
+
+    public function stockTransactions() {
+        return $this->morphMany(StockTransaction::class, 'transactionable');
+    }
+
+    public function stockReturns() {
+        return $this->morphMany(StockReturn::class, 'returnable');
+    }
 }
 
 

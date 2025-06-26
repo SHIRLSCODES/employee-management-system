@@ -27,6 +27,11 @@ class AdminController extends Controller
 
         $admins = $query->paginate(5)->withQueryString();
 
+        // $adminToUpdate = Admin::find(4);
+        // if ($adminToUpdate) {
+        //     $adminToUpdate->assignRole('stock-manager');
+        // }
+
         $departments = Department::get();
 
         return view('admin.admin.index', compact('admins', 'departments'));

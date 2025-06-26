@@ -11,6 +11,8 @@ use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\EmployeeLoginController;
 use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\PaymentRequestController;
+use App\Http\Controllers\StockRequestController;
+use App\Http\Controllers\StockReturnController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Models\Employee;
@@ -75,6 +77,22 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/attendance/checkOut', [AttendanceController::class, 'checkOut'])->name('attendance.checkOut');
     Route::post('/attendance/create', [AttendanceController::class, 'create'])->name('attendance.create');
     Route::post('/attendance/edit', [AttendanceController::class, 'edit'])->name('attendance.edit');
+
+    Route::get('/stockRequest', [StockRequestController::class, 'index'])->name('stockRequisitions.index');
+    Route::get('/stockRequest/create', [StockRequestController::class, 'create'])->name('stockRequisitions.create');
+    Route::post('/stockRequest/store', [StockRequestController::class, 'store'])->name('stockRequisitions.store');
+    Route::get('/stockRequest/{stockRequisition}/show', [StockRequestController::class, 'show'])->name('stockRequisitions.show');
+    Route::get('/stockRequest/{stockRequisition}/edit', [StockRequestController::class, 'edit'])->name('stockRequisitions.edit');
+    Route::patch('/stockRequest/{stockRequisition}/update', [StockRequestController::class, 'update'])->name('stockRequisitions.update');
+    Route::delete('/stockRequest/{stockRequisition}/destroy', [StockRequestController::class, 'destroy'])->name('stockRequisitions.destroy');
+
+    Route::get('/stockReturn', [StockReturnController::class, 'index'])->name('stockReturns.index');
+    Route::get('/stockReturn/create', [StockReturnController::class, 'create'])->name('stockReturns.create');
+    Route::post('/stockReturn/store', [StockReturnController::class, 'store'])->name('stockReturns.store');
+    Route::get('/stockReturn/{stockReturn}/show', [StockReturnController::class, 'show'])->name('stockReturns.show');
+    Route::get('/stockReturn/{stockReturn}/edit', [StockReturnController::class, 'edit'])->name('stockReturns.edit');
+    Route::patch('/stockReturn/{stockReturn}/update', [StockReturnController::class, 'update'])->name('stockReturns.update');
+    Route::delete('/stockReturn/{stockReturn}/destroy', [StockReturnController::class, 'destroy'])->name('stockReturns.destroy');
 });
 
 require __DIR__.'/auth.php';

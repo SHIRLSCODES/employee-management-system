@@ -41,4 +41,16 @@ class Admin extends Authenticatable implements Authorizable
     {
         return $this->belongsTo(Department::class);
     }
+
+    public function stockRequisitions() {
+        return $this->morphMany(StockRequisition::class, 'requestable');
+    }
+
+    public function stockTransactions() {
+        return $this->morphMany(StockTransaction::class, 'transactionable');
+    }
+
+    public function stockReturns() {
+        return $this->morphMany(StockReturn::class, 'returnable');
+    }
 }
