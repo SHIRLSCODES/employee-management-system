@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Attendance;
+use App\Models\Setting;
 use App\Http\Requests\SaveAttendanceRequest;
 use App\Mail\LateAttendanceQueryMail;
 
@@ -133,6 +134,21 @@ class AttendanceController extends Controller
         Mail::to($employee->email)->send(new LateAttendanceQueryMail($employee, $admin, $lateCount));
 
         return back()->with('success', 'Query issued successfully.');
+    }
+
+    public function setup(){
+        return view('admin.attendance.setup');
+    }
+
+    public function updateLatenessTime(Request $request)
+    {
+        $request->validate([
+            'lateness_time' => ['required', 'date_format:H:i'],
+        ]);
+
+        Setting::setValue('lateness_time', $request->lateness_time);
+
+        return redirect()->back()->with('success', 'Lateness time updated successfully.');
     }
     
 }

@@ -1,12 +1,3 @@
-/*
-Template Name: Tailwick - Admin & Dashboard Template
-Author: Themesdesign
-Version: 1.1.0
-Website: https://themesdesign.in/
-Contact: Themesdesign@gmail.com
-File: Main Js File
-*/
-
 // const { document } = require("postcss");
 var navbarMenuHTML = document.querySelector(".app-menu").innerHTML;
 var moreMenuWidth = 150;

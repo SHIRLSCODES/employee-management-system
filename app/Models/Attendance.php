@@ -53,13 +53,17 @@ class Attendance extends Model
     public function getIsLateAttribute(): bool
     {
         if (!$this->check_in) {
-        return false;
+            return false;
         }
 
-        $checkInTime = $this->check_in->copy()->setDateFrom(now());
-        $lateCutoff = now()->copy()->setTime(8, 30, 0);
+        $cutoff = Setting::getValue('lateness_time', '08:30:00');
 
-        return $checkInTime->gt($lateCutoff);
+        $latenessTime = now()->copy()->setTimeFromTimeString($cutoff);
+        
+        $checkInTime = $this->check_in->copy()->setDateFrom($latenessTime);
+
+        return $checkInTime->gt($latenessTime);
     }
+
 
 }

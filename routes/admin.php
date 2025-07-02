@@ -12,6 +12,9 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\StockRequestController;
 use App\Http\Controllers\Admin\PaymentRequestController;
 use App\Http\Controllers\Admin\AttendanceController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\RoleAssignmentController;
+use App\Http\Controllers\Admin\PermissionController;
 use App\Models\Employee;
 
 Route::prefix('admin')->middleware(['auth:admin'])->name('admin.')->group(function () {
@@ -87,7 +90,10 @@ Route::prefix('admin')->middleware(['auth:admin'])->name('admin.')->group(functi
         Route::post('/admin/edit', [AttendanceController::class, 'edit'])->name('edit');
         Route::get('/checkIn', [AttendanceController::class, 'checkIn'])->name('checkIn');
         Route::get('/checkOut', [AttendanceController::class, 'checkOut'])->name('checkOut');
+        Route::get('/setup', [AttendanceController::class, 'setup'])->name('setup');
+        Route::patch('/setup/updateLatenessTime', [AttendanceController::class, 'updateLatenessTime'])->name('updateLatenessTime');
         Route::post('/issueLateQuery', [AttendanceController::class, 'issueLateQuery'])->name('issueLateQuery');
+
         Route::get('/admin', [AttendanceController::class, 'adminIndex'])->name('admin-index');
     });
 
@@ -124,6 +130,16 @@ Route::prefix('admin')->middleware(['auth:admin'])->name('admin.')->group(functi
         Route::patch('/{stockReturn}/approve', [StockReturnController::class, 'approve'])->middleware(['permission:approve stock returns'])->name('approve');
         Route::patch('/{stockReturn}/deny', [StockReturnController::class, 'deny'])->middleware(['permission:deny stock returns'])->name('deny');
     });
+
+    Route::prefix('roles')->name('roles.')->group(function () {
+        Route::get('/index',[RoleController::class, 'index'])->name('index');
+        Route::post('', [RoleController::class, 'store'])->name('store');
+        Route::patch('roles/{role}/permissions', [RoleController::class, 'assignPermissions'])->name('permissions.assign');
+        Route::get('assign-roles', [RoleAssignmentController::class, 'index'])->name('assign.index');
+        Route::patch('/update', [RoleAssignmentController::class, 'update'])->name('assign.update');
+
+        Route::post('/store', [PermissionController::class, 'store'])->name('permissions.store');
+        });
 
     });
 

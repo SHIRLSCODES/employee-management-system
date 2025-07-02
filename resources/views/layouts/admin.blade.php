@@ -19,6 +19,8 @@
     <!-- Tailwind CSS -->
 
   <link rel="stylesheet" href="{{ asset('assets/css/tailwind2.css') }}">
+
+  <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
 </head>
 
 <body class="text-base bg-body-bg text-body font-public dark:text-zink-100 dark:bg-zink-800 group-data-[skin=bordered]:bg-body-bordered group-data-[skin=bordered]:dark:bg-zink-700">
@@ -70,8 +72,7 @@
 <!-- App js -->
 <script src="{{ asset('assets/js/app.js') }}"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+
 </body>
-
-
-<!-- Mirrored from themesdesign.in/tailwick/html-dark/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 21 May 2025 16:39:27 GMT -->
 </html>
