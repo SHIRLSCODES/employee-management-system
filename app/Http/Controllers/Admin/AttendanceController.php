@@ -137,16 +137,18 @@ class AttendanceController extends Controller
     }
 
     public function setup(){
-        return view('admin.attendance.setup');
+        return view('admin.attendance.setup', [
+            'latenessTime' => Setting::getValue('lateness_time', '08:30'),
+        ]);
     }
 
     public function updateLatenessTime(Request $request)
     {
-        $request->validate([
+        $latenessTime = $request->validate([
             'lateness_time' => ['required', 'date_format:H:i'],
         ]);
 
-        Setting::setValue('lateness_time', $request->lateness_time);
+        Setting::setValue('lateness_time', $latenessTime['lateness_time']);
 
         return redirect()->back()->with('success', 'Lateness time updated successfully.');
     }
