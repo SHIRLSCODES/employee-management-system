@@ -14,7 +14,6 @@ use App\Http\Controllers\Admin\PaymentRequestController;
 use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\RoleAssignmentController;
-use App\Http\Controllers\Admin\PermissionController;
 use App\Models\Employee;
 
 Route::prefix('admin')->middleware(['auth:admin'])->name('admin.')->group(function () {
@@ -133,12 +132,14 @@ Route::prefix('admin')->middleware(['auth:admin'])->name('admin.')->group(functi
 
     Route::prefix('roles')->name('roles.')->group(function () {
         Route::get('/index',[RoleController::class, 'index'])->name('index');
+        Route::get('/{role}/edit', [RoleController::class, 'edit'])->middleware(['permission:edit roles'])->name('edit');
+        Route::patch('/{role}/update', [RoleController::class, 'update'])->middleware(['permission:edit roles'])->name('update');
+        Route::delete('/{role}/delete', [RoleController::class, 'delete'])->middleware(['permission:delete roles'])->name('delete');
+        Route::get('/{role}/show', [RoleController::class, 'show'])->name('show');
         Route::post('', [RoleController::class, 'store'])->name('store');
-        Route::patch('roles/{role}/permissions', [RoleController::class, 'assignPermissions'])->name('permissions.assign');
+        Route::patch('roles/{role}/permissions', [RoleController::class, 'assignPermissions'])->middleware(['permission:assign permissions'])->name('permissions.assign');
         Route::get('assign-roles', [RoleAssignmentController::class, 'index'])->name('assign.index');
         Route::patch('/update', [RoleAssignmentController::class, 'update'])->name('assign.update');
-
-        Route::post('/store', [PermissionController::class, 'store'])->name('permissions.store');
         });
 
     });
